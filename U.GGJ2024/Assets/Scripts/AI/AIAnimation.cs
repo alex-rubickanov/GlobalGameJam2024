@@ -12,6 +12,8 @@ public class AIAnimation : MonoBehaviour
     public string AI_DEAD = "DEAD";
     public string AI_HIDE = "HIDE";
     public string AI_ROLL = "ROLL";
+    public string AI_STUN = "STUN";
+    public string AI_REVIVE = "REVIVE";
     public Animator animator => GetComponent<Animator>();
 
     public void SetAnim(string animationName)

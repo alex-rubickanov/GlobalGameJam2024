@@ -66,7 +66,7 @@ public class AIMovement : MonoBehaviour
         else
         {
             int random = Random.Range(0, 5);
-            if (random > 3)
+            if (random > 2)
             {
                 anim.SetAnim(anim.AI_ROLL);
             }

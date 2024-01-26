@@ -48,13 +48,19 @@ public class HidingSpot : MonoBehaviour
         if (hidingObject != null && hit)
         {
             hidingObject.GetComponent<AIMovement>().targetReached = false;
+            // hidingObject.GetComponent<Hide>().SetActive3D(true);
             hidingObject.GetComponent<Hide>().isHiding = false;
-            hidingObject.GetComponent<Hide>().SetHide(false);
             hidingObject.GetComponent<GoToHidingSpot>().RandomizeHidingSpot();
             isHidingHere = false;
-            hidingObject = null;
-            hit = false;
+            StartCoroutine(ResetHit());
         }
+    }
+
+    IEnumerator ResetHit()
+    {
+        yield return new WaitForSeconds(.5f);
+        hidingObject = null;
+        hit = false;
     }
 
     private void OnDrawGizmos()
