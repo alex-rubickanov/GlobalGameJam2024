@@ -14,6 +14,7 @@ public class Propane : GrabbableObject
     private float explodeTimer;
 
     private bool once = false;
+    private bool once2 = false;
 
     protected override void Start()
     {
@@ -27,8 +28,14 @@ public class Propane : GrabbableObject
         base.Update();
         
         explodeTimer -= Time.deltaTime;
-        if(explodeTimer <= 0)
-            Explode();
+        if (explodeTimer <= 0)
+        {
+            if (!once2)
+            {
+                Explode();
+                once2 = true;
+            }
+        }
     }
 
     private void Explode()
@@ -36,10 +43,10 @@ public class Propane : GrabbableObject
         if (!once)
         {
             ParticleSystem particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
-            Destroy(particle.gameObject, 5.0f);
-            once = true;
+            Destroy(particle, 5.0f);
         }
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Rigidbody rigidbody;
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Player"))
@@ -49,10 +56,21 @@ public class Propane : GrabbableObject
                 {
                     playerManager.PlayerGrabbing.LooseObject();
                 }
+
                 playerManager.RagdollController.EnableRagdoll();
                 Vector3 forceDirection = (playerManager.transform.position - transform.position).normalized;
-                playerManager.RagdollController.pelvisRigidbody.AddForce(forceDirection * explosionForce, ForceMode.Impulse);
+                playerManager.RagdollController.pelvisRigidbody.AddForce(forceDirection * explosionForce,
+                    ForceMode.Impulse);
                 playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
+            }
+            else if (collider.transform.TryGetComponent(out rigidbody))
+            {
+                if (!rigidbody.isKinematic)
+                {
+                    Vector3 forceDirection = (rigidbody.transform.position - transform.position).normalized;
+                    rigidbody.AddForce(forceDirection * explosionForce,
+                        ForceMode.Impulse);
+                }
             }
         }
 

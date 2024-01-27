@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerReadyConfirmation : MonoBehaviour
 {
-    private PlayerManager PlayerManager => GetComponent<PlayerManager>();
+    private NPlayerManager playerManager;
     
     [SerializeField] private float timeToConfirm;
     private float timer;
@@ -15,6 +12,8 @@ public class PlayerReadyConfirmation : MonoBehaviour
     private bool rightButtonPressed = false;
     private void Start()
     {
+        playerManager = GetComponent<NPlayerManager>();
+        
         ResetTimer();
     }
 
@@ -32,7 +31,7 @@ public class PlayerReadyConfirmation : MonoBehaviour
             if (timer <= 0)
             {
                 Confirm();
-                Debug.Log(PlayerManager.PlayerInput.playerIndex + " is ready!");
+                Debug.Log(playerManager.InputHandler.playerInput.playerIndex + " is ready!");
             }
         }
         else
@@ -45,7 +44,7 @@ public class PlayerReadyConfirmation : MonoBehaviour
     private void Confirm()
     {
         isReady = true;
-        PlayerManager.SetPlayerReady();
+        //playerManager.SetPlayerReady();
     }
 
     private void ResetTimer()
@@ -74,17 +73,17 @@ public class PlayerReadyConfirmation : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerManager.InputHandler.OnConfirmLeftStarted += OnConfirmLeftStarted;
-        PlayerManager.InputHandler.OnConfirmRightStarted += OnConfirmRightStarted;
-        PlayerManager.InputHandler.OnConfirmLeftCanceled += OnConfirmLeftCanceled;
-        PlayerManager.InputHandler.OnConfirmRightCanceled += OnConfirmRightCanceled;
+        playerManager.InputHandler.OnConfirmLeftStarted += OnConfirmLeftStarted;
+        playerManager.InputHandler.OnConfirmRightStarted += OnConfirmRightStarted;
+        playerManager.InputHandler.OnConfirmLeftCanceled += OnConfirmLeftCanceled;
+        playerManager.InputHandler.OnConfirmRightCanceled += OnConfirmRightCanceled;
     }
 
     private void OnDisable()
     {
-        PlayerManager.InputHandler.OnConfirmLeftStarted -= OnConfirmLeftStarted;
-        PlayerManager.InputHandler.OnConfirmRightStarted -= OnConfirmRightStarted;
-        PlayerManager.InputHandler.OnConfirmLeftCanceled -= OnConfirmLeftCanceled;
-        PlayerManager.InputHandler.OnConfirmRightCanceled -= OnConfirmRightCanceled;
+        playerManager.InputHandler.OnConfirmLeftStarted -= OnConfirmLeftStarted;
+        playerManager.InputHandler.OnConfirmRightStarted -= OnConfirmRightStarted;
+        playerManager.InputHandler.OnConfirmLeftCanceled -= OnConfirmLeftCanceled;
+        playerManager.InputHandler.OnConfirmRightCanceled -= OnConfirmRightCanceled;
     }
 }

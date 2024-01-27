@@ -10,7 +10,7 @@ public class NPlayerAnimator : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController currentAnimatorController;
     
     private NPlayerManager playerManager;
-    private Animator animator;
+    private Animator animator => GetComponent<Animator>();
     
     private static readonly int IsGrabbing = Animator.StringToHash("IsGrabbing");
     private static readonly int Velocity = Animator.StringToHash("Velocity");
@@ -33,8 +33,7 @@ public class NPlayerAnimator : MonoBehaviour
     private void Start()
     {
         playerManager = GetComponentInParent<NPlayerManager>();
-        animator = GetComponent<Animator>();
-        SubscribeToEvents();
+        //animator = GetComponent<Animator>();
     }
 
     public void SubscribeToEvents()
@@ -139,4 +138,6 @@ public class NPlayerAnimator : MonoBehaviour
                 break;
         }
     }
+    
+    
 }

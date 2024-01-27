@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,13 +22,11 @@ public class SceneHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        PassDataToCoopManager();
     }
 
-    public void LoadNextSceneTEST()
+    private void Start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        PassDataToCoopManager();
     }
 
     private void PassDataToCoopManager()
@@ -39,9 +39,7 @@ public class SceneHandler : MonoBehaviour
         {
             CoopManager.Instance.PlayerInputManager.DisableJoining();
         }
-
-        CoopManager.Instance.currentSceneType = sceneType;
-
+        
         CoopManager.Instance.currentSceneType = sceneType;
         
         CoopManager.Instance.spawnPoints = spawnPoints;

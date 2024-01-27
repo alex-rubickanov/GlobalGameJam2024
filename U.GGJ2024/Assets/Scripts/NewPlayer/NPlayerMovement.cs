@@ -16,6 +16,7 @@ public class NPlayerMovement : MonoBehaviour
     [SerializeField] private float moveSmoothTime = 0.1f;
     [SerializeField] private float rotationSmoothTime = 0.1f;
     [SerializeField] private float jumpHeight = 5.0f;
+    [SerializeField] private float checkGroundRayLength = 0.5f; 
 
 
     private Vector3 movementVector;
@@ -23,7 +24,13 @@ public class NPlayerMovement : MonoBehaviour
     private Vector3 moveDampVelocity;
 
     public bool canMove = true;
+    public bool isBucket = false;
+    public bool isDrunk = false;
+    public bool isFart = false;
 
+    [SerializeField] private float randomDirectionDrunkTimer = 3.0f;
+    private float timer;
+    
     public Action OnJumpStart;
     public bool IsGrounded => Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
 
@@ -31,6 +38,8 @@ public class NPlayerMovement : MonoBehaviour
     {
         SetupDependencies();
         SubscribeToEvents();
+
+        timer = randomDirectionDrunkTimer;
     }
 
 
@@ -49,16 +58,35 @@ public class NPlayerMovement : MonoBehaviour
     private void HandleInput()
     {
         Vector3 moveInput = playerManager.InputHandler.GetMoveInput();
-        movementVector = new Vector3(moveInput.x, 0, moveInput.y);
+        if (!isBucket)
+        {
+            movementVector = new Vector3(moveInput.x, 0, moveInput.y);
+        }
+        else
+        {
+            movementVector = new Vector3(-moveInput.y, 0, -moveInput.x);
+        }
     }
 
     private void HandleMovement()
     {
-        if (!airControl && !IsGrounded) return;
+        bool isStayOnAnything = Physics.Raycast(transform.position, Vector3.down, checkGroundRayLength);
+        if (!airControl && !IsGrounded && !isStayOnAnything) return;
 
         float targetSpeed = playerManager.InputHandler.WantsToRun && movementVector.magnitude > 0.5f
             ? runSpeed
             : walkSpeed;
+
+        if (isDrunk)
+        {
+            targetSpeed = targetSpeed / 2;
+        }
+
+        if (isFart)
+        {
+            targetSpeed = targetSpeed * 2;
+        }
+        
         movementVelocity = Vector3.SmoothDamp(
             movementVelocity,
             movementVector * targetSpeed,
@@ -117,5 +145,7 @@ public class NPlayerMovement : MonoBehaviour
         }
 
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        
+        Gizmos.DrawRay(transform.position, Vector3.down * checkGroundRayLength);
     }
 }

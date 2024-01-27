@@ -7,7 +7,7 @@ public class AIDamageManager : MonoBehaviour
 {
     [SerializeField] float health = 10f;
     [SerializeField] float reviveTime = 5f;
-    [SerializeField] float jumpForce = 10f;
+    //[SerializeField] float jumpForce = 10f;
     public bool isStunned;
     float startingHealth;
 

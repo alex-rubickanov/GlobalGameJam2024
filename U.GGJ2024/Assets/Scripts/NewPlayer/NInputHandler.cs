@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class NInputHandler : MonoBehaviour
 {
-    private PlayerInput playerInput;
+    public PlayerInput playerInput => GetComponent<PlayerInput>();
 
     private Vector2 moveInput;
 
@@ -29,13 +29,12 @@ public class NInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
     }
 
     private void Start()
     {
         ActivateInput();
-        SubscribeToInputs(SceneType.Gameplay); //TEMP SOLUTION
     }
 
     public void SubscribeToInputs(SceneType currentActionMap)
@@ -54,6 +53,8 @@ public class NInputHandler : MonoBehaviour
                 playerInput.currentActionMap.FindAction("Run", false).canceled += OnRun_canceled;
                 playerInput.currentActionMap.FindAction("Pause", false).canceled += OnPause_performed;
                 playerInput.currentActionMap.FindAction("UnStun", false).performed += OnMeleeHit_performed;
+                
+                
                 break;
             case SceneType.ConnectionMenu:
                 Debug.Log("Subscribed to connection menu");

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class PlayerCharacterSelector : MonoBehaviour
 {
-    private InputHandler inputHandler;
+    private NInputHandler inputHandler;
 
     [SerializeField] private List<GameObject> characters;
     private GameObject currentCharacter;
@@ -16,7 +16,7 @@ public class PlayerCharacterSelector : MonoBehaviour
     
     private void Start()
     {
-        inputHandler = GetComponent<InputHandler>();
+        inputHandler = GetComponent<NInputHandler>();
 
         inputHandler.OnCCLeft += OnCCLeft;
         inputHandler.OnCCRight += OnCCRight;

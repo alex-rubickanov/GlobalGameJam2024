@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3983983771369062339}
   - component: {fileID: 5012324589075729782}
   - component: {fileID: 3517490949824575537}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Propane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,10 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bbaa2b20b500b54db5502168086a3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwMultiplier: 0
-  throwHitPowerMultiplier: 0
+  throwMultiplier: 0.5
+  throwHitPowerMultiplier: 1
   canBeGrabbed: 1
   wasThrown: 0
+  lastGrabbedByPlayer: {fileID: 0}
   explosionParticle: {fileID: 19854588, guid: 53777b8572d1e7242bc90044f62667ce, type: 3}
   timeToExplode: 6
   explosionForce: 300
