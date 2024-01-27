@@ -19,6 +19,9 @@ public class NPlayerManager : MonoBehaviour
     public Transform playerPawn;
     public Transform playerModel;
     [SerializeField] private int pressToUnStun = 3;
+    [SerializeField] private Transform bucketModel;
+    [SerializeField] private float bucketTime = 10f;
+    [SerializeField] private float drunkTime = 10f;
     
     public bool isStun = false;
     private int pressCount = 0;
@@ -73,5 +76,62 @@ public class NPlayerManager : MonoBehaviour
         RagdollController.EnableRagdoll();
         RagdollController.pelvisRigidbody.AddForce(force, ForceMode.Impulse);
         RagdollController.DisableRagdollWithDelay(3f);
+    }
+
+    public void BucketOn()
+    {
+        PlayerMovement.isBucket = true;
+        bucketModel.gameObject.SetActive(true);
+        StartCoroutine(BucketOff());
+    }
+    
+    private IEnumerator BucketOff()
+    {
+        yield return new WaitForSeconds(bucketTime);
+        PlayerMovement.isBucket = false;
+        bucketModel.gameObject.SetActive(false);
+    }
+
+    public void DrunkOn()
+    {
+        PlayerMovement.isDrunk = true;
+        StartCoroutine(DrunkOff());
+    }
+    
+    public void RestartDrunk()
+    {
+        StopCoroutine(DrunkOff());
+        StartCoroutine(DrunkOff());
+    }
+    
+    private IEnumerator DrunkOff()
+    {
+        yield return new WaitForSeconds(drunkTime);
+        PlayerMovement.isDrunk = false;
+    }
+
+    public void FartOn()
+    {
+        PlayerMovement.isFart = true;
+        StartCoroutine(FartOff());
+    }
+    
+    private IEnumerator FartOff()
+    {
+        yield return new WaitForSeconds(3.0f);
+        RagdollController.EnableRagdoll();
+        yield return new WaitForSeconds(2.0f);
+        RagdollController.DisableRagdoll();
+        yield return new WaitForSeconds(3.0f);
+        RagdollController.EnableRagdoll();
+        yield return new WaitForSeconds(2.0f);
+        RagdollController.DisableRagdoll();
+        yield return new WaitForSeconds(3.0f);
+        RagdollController.EnableRagdoll();
+        yield return new WaitForSeconds(2.0f);
+        RagdollController.DisableRagdoll();
+
+        PlayerMovement.isFart = false;
+
     }
 }

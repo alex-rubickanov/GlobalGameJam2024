@@ -27,6 +27,7 @@ public class StunObject : MonoBehaviour
     {
         isOccupied = true;
         playerInside.Stun(this);
+
         
         playerInside.playerPawn.transform.position = playerPawnHolder.position;
         playerInside.playerPawn.transform.rotation = playerPawnHolder.rotation;   

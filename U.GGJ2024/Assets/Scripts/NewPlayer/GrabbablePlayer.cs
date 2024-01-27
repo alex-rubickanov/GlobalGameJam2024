@@ -37,7 +37,7 @@ public class GrabbablePlayer : GrabbableObject
         playerManager.InputHandler.DeactivateInput();
         playerManager.RagdollController.EnableRagdoll();
         FixedJoint joint = playerGrabbing.grabPoint.GetComponent<FixedJoint>();
-        playerManager.RagdollController.AttachTo(joint);
+        playerManager.RagdollController.AttachPelvisTo(joint);
     }
 
     public override void Throw(Vector3 force)

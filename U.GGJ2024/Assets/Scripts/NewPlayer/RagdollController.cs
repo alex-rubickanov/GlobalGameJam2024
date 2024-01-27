@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class RagdollController : MonoBehaviour
 {
-    private NPlayerManager playerManager;
+    public NPlayerManager playerManager;
 
     [SerializeField] private Transform rootBone;
     [SerializeField] private Transform pelvis;
@@ -14,11 +16,13 @@ public class RagdollController : MonoBehaviour
     public Collider playerCollider;
     public Rigidbody playerRigidbody;
 
-    private Rigidbody[] ragdollBones;
+    public Rigidbody[] ragdollBones;
+    public List<Rigidbody> ragdollBonesList;
     [HideInInspector] public Collider[] ragdollColliders;
     
     public Rigidbody rightLegRigidbody;
     public Rigidbody leftLegRigidbody;
+    public Rigidbody headRigidbody;
 
     public bool isRagdoll = false;
 
@@ -36,7 +40,8 @@ public class RagdollController : MonoBehaviour
 
         playerCollider = GetComponent<Collider>();
         playerRigidbody = GetComponent<Rigidbody>();
-
+        
+        ragdollBonesList = ragdollBones.ToList();
         InitRagdoll();
     }
 
@@ -103,6 +108,7 @@ public class RagdollController : MonoBehaviour
 
     public void EnableRagdoll()
     {
+        Reset();
         if (stopRagdollCoroutine != null)
         {
             StopCoroutine(stopRagdollCoroutine);
@@ -137,6 +143,7 @@ public class RagdollController : MonoBehaviour
         foreach (var ragdoll in ragdollBones)
         {
             ragdoll.isKinematic = true;
+            ragdoll.transform.AddComponent<BoneRagdollTrigger>();
         }
     }
 
@@ -182,12 +189,20 @@ public class RagdollController : MonoBehaviour
         }
     }
 
-    public void AttachTo(FixedJoint joint)
+    public void AttachPelvisTo(FixedJoint joint)
     {
         pelvis.position = joint.transform.position;
         pelvis.rotation = joint.transform.rotation;
 
         joint.connectedBody = pelvisRigidbody;
+    }
+    
+    public void AttachHeadTo(FixedJoint joint)
+    {
+        headRigidbody.position = joint.transform.position;
+        headRigidbody.rotation = joint.transform.rotation;
+
+        joint.connectedBody = headRigidbody;
     }
 
     public void UnAttach(FixedJoint joint)
@@ -222,5 +237,11 @@ public class RagdollController : MonoBehaviour
         {
             return leftLegRigidbody;
         }
+    }
+
+    private void Reset()
+    {
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 }

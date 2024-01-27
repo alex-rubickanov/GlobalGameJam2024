@@ -89,8 +89,10 @@ public class NPlayerGrabbing : MonoBehaviour
     {
         isGrabbing = false;
         isThrowing = false;
-
-        grabbedObject.Throw(force);
+        if (grabbedObject)
+        {
+            grabbedObject.Throw(force);
+        }
         
         throwPower = 0;
         grabbedObject = null;
@@ -132,7 +134,10 @@ public class NPlayerGrabbing : MonoBehaviour
     {
         isThrowing = false;
 
-        grabbedObject.Throw(transform.forward);
+        if (grabbedObject)
+        {
+            grabbedObject.Throw(transform.forward);
+        }
         
         throwPower = 0;
         grabbedObject = null;

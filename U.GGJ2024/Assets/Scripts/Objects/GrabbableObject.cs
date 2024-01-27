@@ -1,12 +1,10 @@
-using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 [RequireComponent(typeof(Rigidbody))]
 public class GrabbableObject : MonoBehaviour
 {
     [SerializeField] protected float throwMultiplier;
-    [SerializeField] private float throwHitPowerMultiplier;
+    [SerializeField] protected float throwHitPowerMultiplier;
     protected Collider col;
     protected Rigidbody rb;
     
@@ -14,7 +12,7 @@ public class GrabbableObject : MonoBehaviour
     public bool wasThrown;
 
     protected NPlayerGrabbing grabbedByPlayer;
-    private NPlayerGrabbing lastGrabbedByPlayer;
+    public NPlayerGrabbing lastGrabbedByPlayer;
     [HideInInspector] public bool isGrabbed => grabbedByPlayer != null;
 
     protected virtual void Start()
