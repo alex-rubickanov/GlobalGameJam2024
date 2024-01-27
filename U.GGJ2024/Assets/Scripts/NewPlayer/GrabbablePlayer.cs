@@ -8,11 +8,11 @@ public class GrabbablePlayer : GrabbableObject
     
     [SerializeField] private float delatForInput;
     [HideInInspector] public bool IsAbleToMove;
-
+    
     protected override void Start()
     {
         base.Start();
-        
+        canBeGrabbed = false;
         playerManager = GetComponentInParent<NPlayerManager>();
     }
 
@@ -24,25 +24,28 @@ public class GrabbablePlayer : GrabbableObject
             if (playerManager.PlayerMovement.IsGrounded)
             {
                 IsAbleToMove = true;
-                wasThrown = false;
             }
         }
     }
 
     public override void Grab(NPlayerGrabbing playerGrabbing)
     {
+        if(!canBeGrabbed) return;
+        
         base.Grab(playerGrabbing);
         
         playerManager.InputHandler.DeactivateInput();
         playerManager.RagdollController.EnableRagdoll();
-        playerManager.RagdollController.AttachTo(playerGrabbing.grabPoint);
+        FixedJoint joint = playerGrabbing.grabPoint.GetComponent<FixedJoint>();
+        playerManager.RagdollController.AttachTo(joint);
     }
 
     public override void Throw(Vector3 force)
     {
-        playerManager.RagdollController.UnAttach();
-        playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
+        FixedJoint joint = grabbedByPlayer.grabPoint.GetComponent<FixedJoint>();
+        playerManager.RagdollController.UnAttach(joint);
         playerManager.RagdollController.pelvisRigidbody.AddForce(force * throwMultiplier, ForceMode.Impulse);
+        playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
         wasThrown = true;
         grabbedByPlayer = null;
     }

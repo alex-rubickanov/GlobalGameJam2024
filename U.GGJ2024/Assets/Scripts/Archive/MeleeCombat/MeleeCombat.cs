@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class MeleeCombat : MonoBehaviour
 {
@@ -14,14 +12,11 @@ public class MeleeCombat : MonoBehaviour
     [SerializeField] private float detectionSphereRadius;
     [SerializeField] private float hitCooldown;
 
-    private bool isAttackCooldown = false;
     public Action OnMeleeHitStart;
 
     private void Start()
     {
         playerManager = GetComponentInParent<NPlayerManager>();
-        playerManager.InputHandler.OnMeleeHit += Attack;
-        playerManager.InputHandler.OnEquipWeapon += TryToEquip;
     }
 
     public void EquipWeapon(MeleeWeaponData weaponData)
@@ -48,11 +43,6 @@ public class MeleeCombat : MonoBehaviour
 
     private void Attack()
     {
-        if (CanAttack)
-        {
-            StartCoroutine(AttackCooldown());
-            OnMeleeHitStart?.Invoke();
-        }
     }
 
     public void DetectHit()
@@ -87,18 +77,10 @@ public class MeleeCombat : MonoBehaviour
         }
     }
 
-    IEnumerator AttackCooldown()
-    {
-        isAttackCooldown = true;
-        yield return new WaitForSeconds(hitCooldown);
-        isAttackCooldown = false;
-    }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(interactionOrigin.position, detectionSphereRadius);
     }
-
-    private bool CanAttack => playerManager.CanAttack() && currentWeapon != null && !isAttackCooldown;
 }

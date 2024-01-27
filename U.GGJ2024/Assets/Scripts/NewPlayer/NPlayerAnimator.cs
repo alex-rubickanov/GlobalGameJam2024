@@ -42,8 +42,6 @@ public class NPlayerAnimator : MonoBehaviour
         if (currentAnimatorController == gameplayController)
         {
             Debug.Log("Animator subscribed to gameplay");
-            playerManager.PlayerCombat.OnMeleeHitStart += OnMeleeHitStart;
-            //OnMeleeHit += playerManager.PlayerCombat.DetectHit;
             playerManager.PlayerMovement.OnJumpStart += OnJumpStart;
         }
         else if (currentAnimatorController == connectionMenuController)

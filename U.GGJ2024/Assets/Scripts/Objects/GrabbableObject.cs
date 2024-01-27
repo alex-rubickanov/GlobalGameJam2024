@@ -2,14 +2,16 @@ using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+[RequireComponent(typeof(Rigidbody))]
 public class GrabbableObject : MonoBehaviour
 {
     [SerializeField] protected float throwMultiplier;
     [SerializeField] private float throwHitPowerMultiplier;
     protected Collider col;
     protected Rigidbody rb;
-
-    protected bool wasThrown;
+    
+    public bool canBeGrabbed = true;
+    public bool wasThrown;
 
     protected NPlayerGrabbing grabbedByPlayer;
     private NPlayerGrabbing lastGrabbedByPlayer;
@@ -52,7 +54,7 @@ public class GrabbableObject : MonoBehaviour
         grabbedByPlayer = null;
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
@@ -60,7 +62,7 @@ public class GrabbableObject : MonoBehaviour
         } else if(other.gameObject.layer == LayerMask.NameToLayer("CharacterBones") && wasThrown)
         {
             NPlayerManager playerManager = other.gameObject.GetComponentInParent<NPlayerManager>();
-            if(playerManager.PlayerGrabbing == lastGrabbedByPlayer) return;
+            if(playerManager.PlayerGrabbing == lastGrabbedByPlayer || playerManager.isStun) return;
             Rigidbody boneRigidbody = other.gameObject.GetComponent<Rigidbody>();
             
             playerManager.RagdollController.EnableRagdoll();
