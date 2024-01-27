@@ -8,7 +8,9 @@ public class AIDamageManager : MonoBehaviour
     [SerializeField] float health = 10f;
     [SerializeField] float reviveTime = 5f;
     [SerializeField] float jumpForce = 10f;
+    public bool isStunned;
     float startingHealth;
+
     public AIAnimation anim => GetComponent<AIAnimation>();
     public Rigidbody rb => GetComponent<Rigidbody>();
     public Hide hide => GetComponent<Hide>();
@@ -34,12 +36,15 @@ public class AIDamageManager : MonoBehaviour
     {
         if (!hide.isHiding)
         {
-            health -= damageValue;
-            anim.SetAnim(anim.AI_HIT);
-
-            if (health <= 0)
+            if (health - damageValue <= 0)
             {
                 Stun();
+
+            }
+            else
+            {
+                health -= damageValue;
+                anim.SetAnim(anim.AI_HIT);
             }
         }
     }
@@ -47,6 +52,7 @@ public class AIDamageManager : MonoBehaviour
     public void Stun()
     {
         OnStunned.Invoke();
+        isStunned = true;
         anim.SetAnim(anim.AI_STUN);
         StartCoroutine(ReviveDelay());
     }
@@ -56,5 +62,6 @@ public class AIDamageManager : MonoBehaviour
         OnRevive.Invoke();
         anim.SetAnim(anim.AI_REVIVE);
         health = startingHealth;
+        isStunned = false;
     }
 }
