@@ -1,21 +1,27 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MeleeCombat : MonoBehaviour
 {
+    private NPlayerManager playerManager;
+
     [SerializeField] private MeleeWeapon currentWeapon;
     [SerializeField] private Transform weaponSlot;
-    [SerializeField] private Transform weaponColliderOrigin;
+    [SerializeField] private Transform interactionOrigin;
     [SerializeField] private float detectionSphereRadius;
     [SerializeField] private float hitCooldown;
+
     private bool isAttackCooldown = false;
     public Action OnMeleeHitStart;
-    
-    private PlayerManager PlayerManager => GetComponentInParent<PlayerManager>();
+
     private void Start()
     {
-        PlayerManager.InputHandler.OnMeleeHit += Attack;
+        playerManager = GetComponentInParent<NPlayerManager>();
+        playerManager.InputHandler.OnMeleeHit += Attack;
+        playerManager.InputHandler.OnEquipWeapon += TryToEquip;
     }
 
     public void EquipWeapon(MeleeWeaponData weaponData)
@@ -25,8 +31,19 @@ public class MeleeCombat : MonoBehaviour
             Destroy(currentWeapon.gameObject);
             currentWeapon = null;
         }
+
         GameObject spawnedWeapon = Instantiate(weaponData.weaponPrefab, weaponSlot);
         currentWeapon = spawnedWeapon.GetComponent<MeleeWeapon>();
+        currentWeapon.SetOwner(this);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log($"POS: {weaponSlot.position} || LOCPOS: {weaponSlot.localPosition}");
+            Debug.Log($"ROT: {weaponSlot.rotation} || LOCROT: {weaponSlot.localRotation}");
+        }
     }
 
     private void Attack()
@@ -37,20 +54,35 @@ public class MeleeCombat : MonoBehaviour
             OnMeleeHitStart?.Invoke();
         }
     }
-    
+
     public void DetectHit()
     {
         Collider[] results;
-        results = Physics.OverlapSphere(weaponColliderOrigin.position, detectionSphereRadius);
+        results = Physics.OverlapSphere(interactionOrigin.position, detectionSphereRadius);
         foreach (var result in results)
         {
             if (result == GetComponent<Collider>()) continue;
-            
+
             IDamageable damageable;
-            
+
             if (result.TryGetComponent(out damageable))
             {
                 damageable.TakeDamage(currentWeapon.GetWeaponData().Damage);
+            }
+        }
+    }
+
+    private void TryToEquip()
+    {
+        Collider[] results;
+        results = Physics.OverlapSphere(interactionOrigin.position, detectionSphereRadius);
+        foreach (var result in results)
+        {
+            MeleeWeapon weapon;
+            if (result.TryGetComponent(out weapon))
+            {
+                EquipWeapon(weapon.GetWeaponData());
+                return;
             }
         }
     }
@@ -65,8 +97,8 @@ public class MeleeCombat : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(weaponColliderOrigin.position, detectionSphereRadius);
+        Gizmos.DrawWireSphere(interactionOrigin.position, detectionSphereRadius);
     }
-    
-    private bool CanAttack => PlayerManager.CanAttack() && currentWeapon != null && !isAttackCooldown;
+
+    private bool CanAttack => playerManager.CanAttack() && currentWeapon != null && !isAttackCooldown;
 }

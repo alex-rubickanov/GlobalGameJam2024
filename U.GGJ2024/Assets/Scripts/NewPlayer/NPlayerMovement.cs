@@ -68,6 +68,7 @@ public class NPlayerMovement : MonoBehaviour
             moveSmoothTime
         );
 
+        if (rb.isKinematic) return;
         rb.velocity = new Vector3(movementVelocity.x, rb.velocity.y, movementVelocity.z);
     }
 

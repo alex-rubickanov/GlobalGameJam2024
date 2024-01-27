@@ -42,8 +42,8 @@ public class NPlayerAnimator : MonoBehaviour
         if (currentAnimatorController == gameplayController)
         {
             Debug.Log("Animator subscribed to gameplay");
-            //playerManager.PlayerMelee.OnMeleeHitStart += OnMeleeHitStart;
-            //OnMeleeHit += playerManager.PlayerMelee.DetectHit;
+            playerManager.PlayerCombat.OnMeleeHitStart += OnMeleeHitStart;
+            //OnMeleeHit += playerManager.PlayerCombat.DetectHit;
             playerManager.PlayerMovement.OnJumpStart += OnJumpStart;
         }
         else if (currentAnimatorController == connectionMenuController)
@@ -101,7 +101,7 @@ public class NPlayerAnimator : MonoBehaviour
             
             animator.SetBool(IsGrabbing, playerManager.PlayerGrabbing.isGrabbing);
             animator.SetBool(IsCharging, playerManager.PlayerGrabbing.IsCharging);
-            animator.SetBool(IsGrabbed, playerManager.PlayerGrabbing.isGrabbed);
+            animator.SetBool(IsGrabbed, playerManager.GrabbablePlayer.isGrabbed);
             animator.SetBool(IsAbleToMove, playerManager.PlayerGrabbing.IsAbleToMove);
         }
         else if (currentAnimatorController == connectionMenuController)
