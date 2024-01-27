@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb947dd0ba076d419e28729ea64dafe, type: 3}
   m_Name: ListOfPrankItems
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 123229860245040794, guid: a7df691de58690d44a536ee3c4633f9e, type: 3}
+  - {fileID: 828024585248574126, guid: 7e2e95bb005853144a58c99f63657e39, type: 3}
+  - {fileID: 5820336023153026419, guid: f53f787faa2da5346a91ce53261a3e8b, type: 3}
+  - {fileID: 617503944360000015, guid: aea5d593a3714d048921fb4e5c6ad018, type: 3}
+  - {fileID: 3092461571661673714, guid: bb5a696e9917c0140aada20e344a9de4, type: 3}
+  - {fileID: 6718263318989446307, guid: 2ec69f5c9c4b8af41bfc678320a04f52, type: 3}
+  - {fileID: 2349215031975838352, guid: bb2b6c44f4b184a4988e8e7ac558e4b5, type: 3}

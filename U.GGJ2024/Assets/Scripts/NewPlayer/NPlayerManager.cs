@@ -8,13 +8,12 @@ using UnityEngine.Serialization;
 
 public class NPlayerManager : MonoBehaviour
 {
-    [HideInInspector] public NInputHandler InputHandler;
-    [HideInInspector] public NPlayerMovement PlayerMovement;
-    [HideInInspector] public NPlayerGrabbing PlayerGrabbing;
-    [HideInInspector] public GrabbablePlayer GrabbablePlayer;
-    [HideInInspector] public NPlayerAnimator PlayerAnimator;
-    [HideInInspector] public RagdollController RagdollController;
-    [HideInInspector] public MeleeCombat PlayerCombat;
+    [HideInInspector] public NInputHandler InputHandler => GetComponent<NInputHandler>();
+    [HideInInspector] public NPlayerMovement PlayerMovement => GetComponentInChildren<NPlayerMovement>();
+    [HideInInspector] public NPlayerGrabbing PlayerGrabbing => GetComponentInChildren<NPlayerGrabbing>();
+    [HideInInspector] public GrabbablePlayer GrabbablePlayer => GetComponentInChildren<GrabbablePlayer>();
+    [HideInInspector] public NPlayerAnimator PlayerAnimator => GetComponentInChildren<NPlayerAnimator>();
+    [HideInInspector] public RagdollController RagdollController => GetComponentInChildren<RagdollController>();
 
     public Transform playerPawn;
     public Transform playerModel;
@@ -30,13 +29,12 @@ public class NPlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        InputHandler = GetComponent<NInputHandler>();
-        PlayerMovement = GetComponentInChildren<NPlayerMovement>();
-        PlayerGrabbing = GetComponentInChildren<NPlayerGrabbing>();
-        PlayerAnimator = GetComponentInChildren<NPlayerAnimator>();
-        RagdollController = GetComponentInChildren<RagdollController>();
-        GrabbablePlayer = GetComponentInChildren<GrabbablePlayer>();
-        PlayerCombat = GetComponentInChildren<MeleeCombat>();
+        //InputHandler = GetComponent<NInputHandler>();
+        //PlayerMovement = GetComponentInChildren<NPlayerMovement>();
+        //PlayerGrabbing = GetComponentInChildren<NPlayerGrabbing>();
+        //PlayerAnimator = GetComponentInChildren<NPlayerAnimator>();
+        //RagdollController = GetComponentInChildren<RagdollController>();
+        //GrabbablePlayer = GetComponentInChildren<GrabbablePlayer>();
     }
 
     private void Start()

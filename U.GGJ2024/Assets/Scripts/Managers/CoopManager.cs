@@ -1,17 +1,15 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerInputManager))]
 public class CoopManager : MonoBehaviour
 {
     public static CoopManager Instance { get; private set; }
     [HideInInspector] public PlayerInputManager PlayerInputManager;
-    [SerializeField] private List<PlayerManager> players = new List<PlayerManager>();
+    [SerializeField] private List<NPlayerManager> players = new List<NPlayerManager>();
 
     [HideInInspector] public List<Transform> spawnPoints = new List<Transform>();
     [HideInInspector] public SceneType currentSceneType;
@@ -40,20 +38,21 @@ public class CoopManager : MonoBehaviour
 
     private void OnPlayerLeft(PlayerInput obj)
     {
-        PlayerManager inputHandler = obj.GetComponent<PlayerManager>();
+        NPlayerManager inputHandler = obj.GetComponent<NPlayerManager>();
         players.Remove(inputHandler);
     }
 
     private void OnPlayerJoined(PlayerInput obj)
     {
-        PlayerManager playerManager = obj.GetComponent<PlayerManager>();
+        NPlayerManager playerManager = obj.GetComponent<NPlayerManager>();
 
         players.Add(playerManager);
 
-        SetupPlayerSpawnPoint(playerManager);
 
-        SetupPlayerActionMap(playerManager);
+        SetupPlayerActionMap(playerManager.InputHandler);
         SetupPlayerAnimator(playerManager);
+        
+        PlacePlayerInSpawnPoint(playerManager);
 
         DontDestroyOnLoad(playerManager.gameObject);
         if (players.Count == 3)
@@ -62,7 +61,7 @@ public class CoopManager : MonoBehaviour
         }
     }
 
-    public List<PlayerManager> GetPlayers()
+    public List<NPlayerManager> GetPlayers()
     {
         return players;
     }
@@ -72,21 +71,20 @@ public class CoopManager : MonoBehaviour
     {
         SetupAllPlayersActionMap();
         SetupAllPlayersAnimator();
-        SetupAllPlayersSpawnPoints();
+        PlaceAllPlayersInSpawnPoints();
     }
     
-    private void SetupPlayerSpawnPoint(PlayerManager playerManager)
+    private void PlacePlayerInSpawnPoint(NPlayerManager playerManager)
     {
-        int playerIndex = players.IndexOf(playerManager);
-        playerManager.SetSpawnPoint(spawnPoints[playerIndex]);
+        playerManager.playerPawn.position = spawnPoints[playerManager.InputHandler.playerInput.playerIndex].position;
+        playerManager.playerPawn.rotation = spawnPoints[playerManager.InputHandler.playerInput.playerIndex].rotation;
     }
-
-    private void SetupAllPlayersSpawnPoints()
+    
+    private void PlaceAllPlayersInSpawnPoints()
     {
-        foreach (var playerManager in players)
+        foreach (var player in players)
         {
-            int playerIndex = players.IndexOf(playerManager);
-            playerManager.SetSpawnPoint(spawnPoints[playerIndex]);
+            PlacePlayerInSpawnPoint(player);
         }
     }
 
@@ -94,7 +92,7 @@ public class CoopManager : MonoBehaviour
     {
         foreach (var playerManager in players)
         {
-            playerManager.PlayerInput.SwitchCurrentActionMap(currentSceneType.ToString());
+            playerManager.InputHandler.playerInput.SwitchCurrentActionMap(currentSceneType.ToString());
             playerManager.InputHandler.SubscribeToInputs(currentSceneType);
         }
     }
@@ -103,21 +101,21 @@ public class CoopManager : MonoBehaviour
     {
         foreach (var playerManager in players)
         {
-            playerManager.PlayerAnimator.SetAnimator(currentSceneType);
-            playerManager.PlayerAnimator.Subscribe();
+            SetupPlayerAnimator(playerManager);
         }
     }
 
-    private void SetupPlayerActionMap(PlayerManager playerManager)
+    private void SetupPlayerActionMap(NInputHandler inputHandler)
     {
-        playerManager.PlayerInput.SwitchCurrentActionMap(currentSceneType.ToString());
-        playerManager.InputHandler.SubscribeToInputs(currentSceneType);
+        inputHandler.playerInput.SwitchCurrentActionMap(currentSceneType.ToString());
+        inputHandler.SubscribeToInputs(currentSceneType);
     }
 
-    private void SetupPlayerAnimator(PlayerManager playerManager)
+    private void SetupPlayerAnimator(NPlayerManager playerManager)
     {
+        if(!playerManager.PlayerAnimator) Debug.Log("Player animator is null");
         playerManager.PlayerAnimator.SetAnimator(currentSceneType);
-        playerManager.PlayerAnimator.Subscribe();
+        playerManager.PlayerAnimator.SubscribeToEvents();
     }
 
     private void OnEnable()
