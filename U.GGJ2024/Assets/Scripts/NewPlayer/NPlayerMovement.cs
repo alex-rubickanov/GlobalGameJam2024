@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NPlayerMovement : MonoBehaviour
@@ -12,7 +10,6 @@ public class NPlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float groundCheckRadius = 0.5f;
-    [SerializeField] private float gravity =-5.0f;
 
     [SerializeField] private float walkSpeed = 6.0f;
     [SerializeField] private float runSpeed = 12.0f;
@@ -24,6 +21,8 @@ public class NPlayerMovement : MonoBehaviour
     private Vector3 movementVector;
     private Vector3 movementVelocity;
     private Vector3 moveDampVelocity;
+
+    public bool canMove = true;
 
     public Action OnJumpStart;
     public bool IsGrounded => Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
@@ -44,7 +43,6 @@ public class NPlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         HandleMovement();
-        //HandleGravity();
     }
 
 
@@ -69,11 +67,13 @@ public class NPlayerMovement : MonoBehaviour
         );
 
         if (rb.isKinematic) return;
+        if (!canMove) return;
         rb.velocity = new Vector3(movementVelocity.x, rb.velocity.y, movementVelocity.z);
     }
 
     private void HandleRotation()
     {
+        if(!canMove) return;
         Vector3 direction = new Vector3(movementVector.x, 0, movementVector.z);
         if (direction != Vector3.zero)
         {
@@ -89,15 +89,6 @@ public class NPlayerMovement : MonoBehaviour
         rb.velocity += new Vector3(0, jumpHeight, 0);
         OnJumpStart?.Invoke();
     }
-
-    private void HandleGravity()
-    {
-        if (!IsGrounded)
-        {
-            rb.velocity += new Vector3(0, gravity, 0);
-        }
-    }
-
     private void SetupDependencies()
     {
         playerManager = GetComponentInParent<NPlayerManager>();
@@ -106,7 +97,7 @@ public class NPlayerMovement : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        //playerManager.InputHandler.OnJump += Jump;
+        playerManager.InputHandler.OnJump += Jump;
     }
 
     public float GetVelocityMagnitude()

@@ -8,11 +8,11 @@ public class GrabbablePlayer : GrabbableObject
     
     [SerializeField] private float delatForInput;
     [HideInInspector] public bool IsAbleToMove;
-
+    
     protected override void Start()
     {
         base.Start();
-        
+        canBeGrabbed = false;
         playerManager = GetComponentInParent<NPlayerManager>();
     }
 
@@ -24,13 +24,14 @@ public class GrabbablePlayer : GrabbableObject
             if (playerManager.PlayerMovement.IsGrounded)
             {
                 IsAbleToMove = true;
-                wasThrown = false;
             }
         }
     }
 
     public override void Grab(NPlayerGrabbing playerGrabbing)
     {
+        if(!canBeGrabbed) return;
+        
         base.Grab(playerGrabbing);
         
         playerManager.InputHandler.DeactivateInput();
@@ -43,8 +44,8 @@ public class GrabbablePlayer : GrabbableObject
     {
         FixedJoint joint = grabbedByPlayer.grabPoint.GetComponent<FixedJoint>();
         playerManager.RagdollController.UnAttach(joint);
-        playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
         playerManager.RagdollController.pelvisRigidbody.AddForce(force * throwMultiplier, ForceMode.Impulse);
+        playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
         wasThrown = true;
         grabbedByPlayer = null;
     }

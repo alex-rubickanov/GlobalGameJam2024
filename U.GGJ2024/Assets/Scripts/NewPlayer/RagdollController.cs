@@ -11,11 +11,18 @@ public class RagdollController : MonoBehaviour
     [SerializeField] private Transform pelvis;
     public Rigidbody pelvisRigidbody;
     private Animator animator;
-    private Collider playerCollider;
-    private Rigidbody playerRigidbody;
+    public Collider playerCollider;
+    public Rigidbody playerRigidbody;
 
     private Rigidbody[] ragdollBones;
     [HideInInspector] public Collider[] ragdollColliders;
+    
+    public Rigidbody rightLegRigidbody;
+    public Rigidbody leftLegRigidbody;
+
+    public bool isRagdoll = false;
+
+    private Coroutine stopRagdollCoroutine = null;
 
     private void Start()
     {
@@ -35,8 +42,12 @@ public class RagdollController : MonoBehaviour
 
     public void DisableRagdoll()
     {
+        isRagdoll = false;
+
+        playerManager.GrabbablePlayer.canBeGrabbed = false;
+
         playerRigidbody.isKinematic = false;
-        
+
         foreach (var ragdoll in ragdollBones)
         {
             ragdoll.isKinematic = true;
@@ -48,23 +59,76 @@ public class RagdollController : MonoBehaviour
         AlignRotationToHips();
         AlignPositionToHips();
 
+        playerManager.playerPawn.rotation = new Quaternion(0, playerManager.playerPawn.rotation.y,
+            0, playerManager.playerPawn.rotation.w);
+
         animator.enabled = true;
         PlayGetUpAnimation();
-        
+
+        playerManager.GrabbablePlayer.wasThrown = false;
+
+        playerManager.PlayerMovement.canMove = true;
+        playerManager.InputHandler.ActivateInput();
+    }
+
+    public void DisableWithoutAnimation()
+    {
+        isRagdoll = false;
+
+        playerManager.GrabbablePlayer.canBeGrabbed = false;
+
+        playerRigidbody.isKinematic = false;
+
+        foreach (var ragdoll in ragdollBones)
+        {
+            ragdoll.isKinematic = true;
+        }
+
+        playerCollider.enabled = true;
+
+
+        AlignRotationToHips();
+        AlignPositionToHips();
+
+        playerManager.playerPawn.rotation = new Quaternion(0, playerManager.playerPawn.rotation.y,
+            0, playerManager.playerPawn.rotation.w);
+
+        animator.enabled = true;
+
+        playerManager.GrabbablePlayer.wasThrown = false;
+
+        playerManager.PlayerMovement.canMove = true;
         playerManager.InputHandler.ActivateInput();
     }
 
     public void EnableRagdoll()
     {
+        if (stopRagdollCoroutine != null)
+        {
+            StopCoroutine(stopRagdollCoroutine);
+        }
+
+        if (playerManager.PlayerGrabbing.isGrabbing)
+        {
+            playerManager.PlayerGrabbing.LooseObject();
+        }
+
+        isRagdoll = true;
+
+        playerCollider.enabled = false;
+
+        playerManager.GrabbablePlayer.canBeGrabbed = true;
+
         playerRigidbody.isKinematic = true;
-        
+
         foreach (var ragdoll in ragdollBones)
         {
             ragdoll.isKinematic = false;
         }
+
         animator.enabled = false;
 
-        
+
         playerManager.InputHandler.DeactivateInput();
     }
 
@@ -122,7 +186,7 @@ public class RagdollController : MonoBehaviour
     {
         pelvis.position = joint.transform.position;
         pelvis.rotation = joint.transform.rotation;
-        
+
         joint.connectedBody = pelvisRigidbody;
     }
 
@@ -133,13 +197,30 @@ public class RagdollController : MonoBehaviour
 
     public void DisableRagdollWithDelay(float delay)
     {
-        StopCoroutine(DisableRagdollWithDelayCoroutine(delay));
-        StartCoroutine(DisableRagdollWithDelayCoroutine(delay));
+        stopRagdollCoroutine = StartCoroutine(DisableRagdollWithDelayCoroutine(delay));
     }
 
     private IEnumerator DisableRagdollWithDelayCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (playerManager.GrabbablePlayer.isGrabbed || playerManager.isStun || !isRagdoll)
+        {
+            yield break;
+        }
+
         DisableRagdoll();
+    }
+    
+    public Rigidbody GetRandomLeg()
+    {
+        int random = UnityEngine.Random.Range(0, 2);
+        if (random == 0)
+        {
+            return rightLegRigidbody;
+        }
+        else
+        {
+            return leftLegRigidbody;
+        }
     }
 }

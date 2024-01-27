@@ -1305,7 +1305,7 @@ GameObject:
   - component: {fileID: 5952996323369166024}
   m_Layer: 31
   m_Name: PlayerPawn
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1347,12 +1347,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckRadius: 0.29
-  gravity: -1.5
   walkSpeed: 6
   runSpeed: 12
   moveSmoothTime: 0.1
   rotationSmoothTime: 0.1
-  jumpHeight: 10
+  jumpHeight: 6
+  canMove: 1
 --- !u!114 &419787144681954836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1372,6 +1372,7 @@ MonoBehaviour:
   grabPoint: {fileID: 4021436291401842103}
   delatForInput: 1
   IsAbleToMove: 0
+  isGrabbing: 0
   interactOrigin: {fileID: 8097911013439571291}
   detectionSphereRadius: 0.63
 --- !u!114 &533773143640207199
@@ -1389,7 +1390,12 @@ MonoBehaviour:
   rootBone: {fileID: 2338549754596402369}
   pelvis: {fileID: 4161872229239699176}
   pelvisRigidbody: {fileID: 0}
+  playerCollider: {fileID: 0}
+  playerRigidbody: {fileID: 0}
   ragdollColliders: []
+  rightLegRigidbody: {fileID: 1441355715362892926}
+  leftLegRigidbody: {fileID: 2311323121783570934}
+  isRagdoll: 0
 --- !u!114 &5880111457385113284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,6 +1410,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   throwMultiplier: 15
   throwHitPowerMultiplier: 0
+  canBeGrabbed: 1
+  wasThrown: 0
   playerManager: {fileID: 0}
   delatForInput: 3
   IsAbleToMove: 0
@@ -3330,7 +3338,7 @@ Transform:
   m_GameObject: {fileID: 4357593240057790216}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.844, z: 0.77}
+  m_LocalPosition: {x: 0, y: 0.463, z: 0.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4087,11 +4095,11 @@ GameObject:
   - component: {fileID: 2950847434976721901}
   m_Layer: 0
   m_Name: NEW_PlayerController
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7521642999624331729
 Transform:
   m_ObjectHideFlags: 0
@@ -4158,6 +4166,10 @@ MonoBehaviour:
   PlayerAnimator: {fileID: 0}
   RagdollController: {fileID: 0}
   PlayerCombat: {fileID: 0}
+  playerPawn: {fileID: 1193232647281918122}
+  playerModel: {fileID: 756499342720491618}
+  pressToUnStun: 3
+  isStun: 0
 --- !u!114 &2950847434976721901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5087,7 +5099,7 @@ Transform:
   m_GameObject: {fileID: 7110949186607612678}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.185, z: 0}
+  m_LocalPosition: {x: -0.293, y: 2.185, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

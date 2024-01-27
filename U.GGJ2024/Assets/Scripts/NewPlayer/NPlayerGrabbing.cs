@@ -23,7 +23,7 @@ public class NPlayerGrabbing : MonoBehaviour
     private GrabbableObject grabbedObject;
     
     private bool isThrowing = false;
-    [HideInInspector] public bool isGrabbing => grabbedObject != null;
+    [HideInInspector] public bool isGrabbing;
 
     [Header("Detection")] 
     [SerializeField] private Transform interactOrigin;
@@ -60,23 +60,34 @@ public class NPlayerGrabbing : MonoBehaviour
             if (grabbedObject) return;
             
             
-            if (result.TryGetComponent(out grabbedObject))
+            
+            if (result.GetComponentInParent<GrabbableObject>())
             {
-                if (grabbedObject is GrabbablePlayer)
+                grabbedObject = result.GetComponentInParent<GrabbableObject>();
+                if (grabbedObject.canBeGrabbed)
                 {
-                    NPlayerManager grabbedPlayerManager = grabbedObject.GetComponentInParent<NPlayerManager>();
-                    if (grabbedPlayerManager.PlayerGrabbing.isGrabbing)
+                    isGrabbing = true;
+                    if (grabbedObject is GrabbablePlayer)
                     {
-                        grabbedPlayerManager.PlayerGrabbing.LooseObject();
+                        NPlayerManager grabbedPlayerManager = grabbedObject.GetComponentInParent<NPlayerManager>();
+                        if (grabbedPlayerManager.PlayerGrabbing.isGrabbing)
+                        {
+                            grabbedPlayerManager.PlayerGrabbing.LooseObject();
+                        }
                     }
+                    grabbedObject.Grab(this);
                 }
-                grabbedObject.Grab(this);
+                else
+                {
+                    grabbedObject = null;
+                }
             }
         }
     }
 
     private void ThrowObject(Vector3 force)
     {
+        isGrabbing = false;
         isThrowing = false;
 
         grabbedObject.Throw(force);
