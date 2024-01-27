@@ -15,16 +15,15 @@ public class NPlayerGrabbing : MonoBehaviour
     [HideInInspector] public bool IsCharging = false;
     private float throwPower;
 
-    [Header("Grabbing")] [SerializeField] 
-    private Transform grabPoint;
+    [Header("Grabbing")]
+    [SerializeField] public Transform grabPoint;
     [SerializeField] private float delatForInput;
     [HideInInspector] public bool IsAbleToMove;
-    private NPlayerGrabbing grabbedPlayer;
-    private NPlayerGrabbing grabbedByPlayer;
+    
+    private GrabbableObject grabbedObject;
+    
     private bool isThrowing = false;
-    private bool wasThrown;
-    [HideInInspector] public bool isGrabbed => grabbedByPlayer != null;
-    [HideInInspector] public bool isGrabbing => grabbedPlayer != null;
+    [HideInInspector] public bool isGrabbing => grabbedObject != null;
 
     [Header("Detection")] 
     [SerializeField] private Transform interactOrigin;
@@ -45,81 +44,54 @@ public class NPlayerGrabbing : MonoBehaviour
 
     private void Update()
     {
-        if (isGrabbed)
-        {
-            BeGrabbed();
-        }
-
-        if (wasThrown)
-        {
-            IsAbleToMove = false;
-            if (playerManager.PlayerMovement.IsGrounded)
-            {
-                IsAbleToMove = true;
-                playerManager.InputHandler.ActivateInputWithDelay(delatForInput);
-                wasThrown = false;
-            }
-        }
-
         if (IsCharging)
         {
             ChargePower();
         }
     }
 
-    private void BeGrabbed()
-    {
-        transform.position = grabbedByPlayer.grabPoint.position;
-        transform.rotation = grabbedByPlayer.grabPoint.rotation;
-        playerManager.InputHandler.DeactivateInput();
-    }
-
-    private void TryGrabPlayer()
+    private void TryGrab()
     {
         Collider[] results;
         results = Physics.OverlapSphere(interactOrigin.position, detectionSphereRadius);
         foreach (var result in results)
         {
             if (result == GetComponent<Collider>()) continue;
-            if (grabbedPlayer) return;
+            if (grabbedObject) return;
             
             
-            if (result.TryGetComponent(out grabbedPlayer))
+            if (result.TryGetComponent(out grabbedObject))
             {
-                GrabPlayer();
+                if (grabbedObject is GrabbablePlayer)
+                {
+                    NPlayerManager grabbedPlayerManager = grabbedObject.GetComponentInParent<NPlayerManager>();
+                    if (grabbedPlayerManager.PlayerGrabbing.isGrabbing)
+                    {
+                        grabbedPlayerManager.PlayerGrabbing.LooseObject();
+                    }
+                }
+                grabbedObject.Grab(this);
             }
         }
     }
 
-    private void GrabPlayer()
-    {
-        grabbedPlayer.grabbedByPlayer = this;
-        grabbedPlayer.col.enabled = false;
-        grabbedPlayer.playerManager.RagdollController.EnableRagdoll();
-        grabbedPlayer.playerManager.RagdollController.AttachTo(grabPoint);
-    }
-
-    private void ThrowPlayer()
+    private void ThrowObject(Vector3 force)
     {
         isThrowing = false;
+
+        grabbedObject.Throw(force);
         
-        grabbedPlayer.playerManager.RagdollController.UnAttach();
-        grabbedPlayer.playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
-        grabbedPlayer.playerManager.RagdollController.pelvisRigidbody.AddForce(transform.forward * throwPower * 20, ForceMode.Impulse);
         throwPower = 0;
-        grabbedPlayer.wasThrown = true;
-        grabbedPlayer.grabbedByPlayer = null;
-        grabbedPlayer = null;
+        grabbedObject = null;
     }
 
     private void OnInteractPerformed()
     {
-        if (!isGrabbing && !isGrabbed)
+        if (!isGrabbing)
         {
-            TryGrabPlayer();
+            TryGrab();
         }
     }
-
 
     private void OnInteractStarted()
     {
@@ -134,7 +106,7 @@ public class NPlayerGrabbing : MonoBehaviour
         if (isThrowing)
         {
             IsCharging = false;
-            ThrowPlayer();
+            ThrowObject(transform.forward * throwPower);
         }
     }
 
@@ -143,6 +115,16 @@ public class NPlayerGrabbing : MonoBehaviour
         isThrowing = true;
         throwPower += throwPowerChargeSpeed * Time.deltaTime;
         throwPower = Mathf.Clamp(throwPower, minThrowPower, maxThrowPower);
+    }
+
+    public void LooseObject()
+    {
+        isThrowing = false;
+
+        grabbedObject.Throw(transform.forward);
+        
+        throwPower = 0;
+        grabbedObject = null;
     }
 
     private void OnEnable()

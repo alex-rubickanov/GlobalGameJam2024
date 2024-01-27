@@ -15,6 +15,7 @@ public class NInputHandler : MonoBehaviour
 
     public Action OnJump;
     public Action OnPause;
+    public Action OnEquipWeapon;
     public Action OnMeleeHit;
 
     public Action OnCCLeft;
@@ -54,6 +55,7 @@ public class NInputHandler : MonoBehaviour
                 playerInput.currentActionMap.FindAction("Run", false).canceled += OnRun_canceled;
                 playerInput.currentActionMap.FindAction("Pause", false).canceled += OnPause_performed;
                 playerInput.currentActionMap.FindAction("MeleeHit", false).performed += OnMeleeHit_performed;
+                playerInput.currentActionMap.FindAction("EquipWeapon", false).performed += OnEquipWeapon_performed;
                 break;
             case SceneType.ConnectionMenu:
                 Debug.Log("Subscribed to connection menu");
@@ -71,6 +73,11 @@ public class NInputHandler : MonoBehaviour
                 Debug.LogError($"Player {playerInput.playerIndex} current action map is not found");
                 break;
         }
+    }
+
+    private void OnEquipWeapon_performed(InputAction.CallbackContext obj)
+    {
+        OnEquipWeapon?.Invoke();
     }
 
     private void OnConfirmLeft_started(InputAction.CallbackContext obj)

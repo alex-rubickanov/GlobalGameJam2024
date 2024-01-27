@@ -10,8 +10,10 @@ public class NPlayerManager : MonoBehaviour
     public NInputHandler InputHandler;
     public NPlayerMovement PlayerMovement;
     public NPlayerGrabbing PlayerGrabbing;
+    public GrabbablePlayer GrabbablePlayer;
     public NPlayerAnimator PlayerAnimator;
     public RagdollController RagdollController;
+    public MeleeCombat PlayerCombat;
 
     private void Awake()
     {
@@ -20,5 +22,12 @@ public class NPlayerManager : MonoBehaviour
         PlayerGrabbing = GetComponentInChildren<NPlayerGrabbing>();
         PlayerAnimator = GetComponentInChildren<NPlayerAnimator>();
         RagdollController = GetComponentInChildren<RagdollController>();
+        GrabbablePlayer = GetComponentInChildren<GrabbablePlayer>();
+        PlayerCombat = GetComponentInChildren<MeleeCombat>();
+    }
+    
+    public bool CanAttack()
+    {
+        return !GrabbablePlayer.isGrabbed && !PlayerGrabbing.isGrabbing;
     }
 }

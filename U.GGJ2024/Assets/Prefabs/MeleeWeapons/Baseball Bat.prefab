@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7230688257309692032}
   - component: {fileID: 2883216876379016170}
-  m_Layer: 0
+  - component: {fileID: 7700990217446035455}
+  - component: {fileID: 548849371775153091}
+  m_Layer: 8
   m_Name: Baseball Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +48,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeWeaponData: {fileID: 11400000, guid: ce982f5513959f245af652c46295ade9, type: 2}
+--- !u!65 &7700990217446035455
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347730183456283991}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19984436, y: 1.2333789, z: 0.2031784}
+  m_Center: {x: 0, y: 0.5999825, z: 0.0016670227}
+--- !u!54 &548849371775153091
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347730183456283991}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3514362483133379620
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +107,7 @@ GameObject:
   - component: {fileID: 6585087521320778122}
   - component: {fileID: 560620187124880159}
   - component: {fileID: 5702293904685964447}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
