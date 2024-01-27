@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
 public class Hide : MonoBehaviour
 {
-    [SerializeField] GameObject bugModel;
+    public GameObject bugModel;
     public bool isHiding;
     public bool IsHiding { get => isHiding; set => isHiding = value; }
 
-    public void SetHide(bool value)
+    public void SetActive3D(bool value, float delay)
     {
-       StartCoroutine(Hide3DModel(value));
+        StartCoroutine(Set3D(value, delay));
     }
 
-    IEnumerator Hide3DModel(bool value)
+    public void SetActive3D(bool value)
     {
-        yield return new WaitForSeconds(2);
-        bugModel.SetActive(!value);
+        bugModel.SetActive(value);
+    }
+
+
+    IEnumerator Set3D(bool value, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        bugModel.SetActive(value);
     }
 }

@@ -25,14 +25,11 @@ public class GoToHidingSpot : MonoBehaviour
     {
         if (aiMovement.TargetIsAvailable && aiMovement.targetReached)
         {
+            Debug.Log("False");
             chosenHidingSpot.hidingObject = gameObject;
-            hide.SetHide(true);
+            //hide.SetActive3D(false, 2);
             chosenHidingSpot.isHidingHere = true;
             hide.IsHiding = true;
-        }
-        else if (!aiMovement.targetReached)
-        {
-            hide.SetHide(false);
         }
 
         if (!aiMovement.TargetIsAvailable)
