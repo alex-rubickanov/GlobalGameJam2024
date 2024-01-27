@@ -123,94 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &380818225
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 548849371775153091, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 548849371775153091, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1347730183456283991, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_Name
-      value: Baseball Bat
-      objectReference: {fileID: 0}
-    - target: {fileID: 1347730183456283991, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3514362483133379620, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.693
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 11.360769
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230688257309692032, guid: 69252f8d5c6bf5d42bda16037e6159a8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 69252f8d5c6bf5d42bda16037e6159a8, type: 3}
 --- !u!1 &504528838
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,30 +1564,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4391249703847420411, guid: 7e080682beafc8442b72fcc6978bb4b4,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4391249703847420411, guid: 7e080682beafc8442b72fcc6978bb4b4,
-        type: 3}
-      propertyPath: weaponSlot
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4391249703847420411, guid: 7e080682beafc8442b72fcc6978bb4b4,
-        type: 3}
-      propertyPath: currentWeapon
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6120548892981921103, guid: 7e080682beafc8442b72fcc6978bb4b4,
         type: 3}
       propertyPath: m_Name
       value: NEW_PlayerController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6120548892981921103, guid: 7e080682beafc8442b72fcc6978bb4b4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7521642999624331729, guid: 7e080682beafc8442b72fcc6978bb4b4,
         type: 3}
@@ -1728,9 +1620,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2384951091220823291, guid: 7e080682beafc8442b72fcc6978bb4b4, type: 3}
-    - {fileID: 4463179975760295022, guid: 7e080682beafc8442b72fcc6978bb4b4, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e080682beafc8442b72fcc6978bb4b4, type: 3}
@@ -1752,4 +1642,3 @@ SceneRoots:
   - {fileID: 1088087900}
   - {fileID: 1872023073}
   - {fileID: 1071278372}
-  - {fileID: 380818225}

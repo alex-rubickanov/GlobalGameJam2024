@@ -35,12 +35,14 @@ public class GrabbablePlayer : GrabbableObject
         
         playerManager.InputHandler.DeactivateInput();
         playerManager.RagdollController.EnableRagdoll();
-        playerManager.RagdollController.AttachTo(playerGrabbing.grabPoint);
+        FixedJoint joint = playerGrabbing.grabPoint.GetComponent<FixedJoint>();
+        playerManager.RagdollController.AttachTo(joint);
     }
 
     public override void Throw(Vector3 force)
     {
-        playerManager.RagdollController.UnAttach();
+        FixedJoint joint = grabbedByPlayer.grabPoint.GetComponent<FixedJoint>();
+        playerManager.RagdollController.UnAttach(joint);
         playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
         playerManager.RagdollController.pelvisRigidbody.AddForce(force * throwMultiplier, ForceMode.Impulse);
         wasThrown = true;

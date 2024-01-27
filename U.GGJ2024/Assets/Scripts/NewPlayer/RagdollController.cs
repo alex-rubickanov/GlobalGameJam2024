@@ -13,8 +13,6 @@ public class RagdollController : MonoBehaviour
     private Animator animator;
     private Collider playerCollider;
     private Rigidbody playerRigidbody;
-    private bool isAttached = false;
-    private Transform attachedTo;
 
     private Rigidbody[] ragdollBones;
     [HideInInspector] public Collider[] ragdollColliders;
@@ -33,15 +31,6 @@ public class RagdollController : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
 
         InitRagdoll();
-    }
-
-    private void Update()
-    {
-        if (isAttached)
-        {
-            pelvis.position = attachedTo.position;
-            pelvis.rotation = attachedTo.rotation;
-        }
     }
 
     public void DisableRagdoll()
@@ -129,18 +118,17 @@ public class RagdollController : MonoBehaviour
         }
     }
 
-    public void AttachTo(Transform transform)
+    public void AttachTo(FixedJoint joint)
     {
-        isAttached = true;
-        attachedTo = transform;
-        pelvisRigidbody.isKinematic = true;
+        pelvis.position = joint.transform.position;
+        pelvis.rotation = joint.transform.rotation;
+        
+        joint.connectedBody = pelvisRigidbody;
     }
 
-    public void UnAttach()
+    public void UnAttach(FixedJoint joint)
     {
-        isAttached = false;
-        attachedTo = null;
-        pelvisRigidbody.isKinematic = false;
+        joint.connectedBody = null;
     }
 
     public void DisableRagdollWithDelay(float delay)
