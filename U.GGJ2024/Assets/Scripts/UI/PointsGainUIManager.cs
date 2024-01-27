@@ -31,14 +31,6 @@ public class PointsGainUIManager : MonoBehaviour
         InitObjectPool();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ShowUIPoints(playerTransform, 5);
-        }
-    }
-
     public void ShowUIPoints(Transform worldPoint, float value)
     {
         if (points.Count <= 0) { return; }
@@ -52,19 +44,35 @@ public class PointsGainUIManager : MonoBehaviour
 
                 RectTransform rectTransform = point.GetComponent<RectTransform>();
 
-                // Use the player's position as the UI position (adjust y if needed)
-                rectTransform.position = Camera.main.WorldToScreenPoint(worldPoint.position);
+                // Convert world position to screen space
+                Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPoint.position);
+
+                rectTransform.position = new Vector3(screenPos.x, screenPos.y, 0f);
 
                 point.SetActive(true);
 
-                //while(Vector3.Distance(rectTransform.position, playerUI.position) > 1)
-                //{
-                //    rectTransform.position = Vector3.MoveTowards(rectTransform.position, playerUI.position, 5 * Time.deltaTime);
-                //}
+                StartCoroutine(MoveToPlayerUI(rectTransform, playerUI));
                 StartCoroutine(SetPointsActiveToFalse(point));
                 break;
             }
         }
+    }
+
+    IEnumerator MoveToPlayerUI(RectTransform rectTransform, Transform targetPosition)
+    {
+        float duration = 1f;
+        float elapsedTime = 0f;
+
+        Vector3 startPosition = rectTransform.position;
+
+        while (elapsedTime < duration)
+        {
+            rectTransform.position = Vector3.Lerp(startPosition, targetPosition.position, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        targetPosition.GetComponent<Animator>().SetTrigger("ReceivePoints");
+        rectTransform.position = targetPosition.position;
     }
 
     IEnumerator SetPointsActiveToFalse(GameObject point)
