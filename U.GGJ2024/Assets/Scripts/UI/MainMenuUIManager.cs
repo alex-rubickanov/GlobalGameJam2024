@@ -2,9 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class MainMenuUIManager : MonoBehaviour
 {
+    public static MainMenuUIManager Instance;
     [SerializeField] PlayerInputManager playerInputManager;
     [SerializeField] Volume volume;
     VolumeProfile profile;
@@ -20,11 +22,13 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] GameObject[] selectChrBtn;
     [SerializeField] GameObject[] readyBtn; 
     int playerCount;
+
+    public int readyCount;
     private void Awake()
     {
+        Instance = this;
         profile = volume.sharedProfile;
         playerInputManager.onPlayerJoined += DisableJoinBtns;
-
     }
     void Start()
     {
@@ -43,6 +47,11 @@ public class MainMenuUIManager : MonoBehaviour
             characterSelectionPanel.SetActive(true);
             cameraPicture.SetActive(true);
         }
+
+        if (readyCount == 3)
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
 
@@ -59,6 +68,15 @@ public class MainMenuUIManager : MonoBehaviour
     {
         joinBtns[playerCount].SetActive(false);
         arrows[playerCount].SetActive(true);
+        selectChrBtn[playerCount].SetActive(true);
         playerCount++;
+    }
+    
+    public void EnableReadyBtn(int playerIndex)
+    {
+        arrows[playerIndex].SetActive(false);
+        selectChrBtn[playerIndex].SetActive(false);
+        readyBtn[playerIndex].SetActive(true);
+        readyCount++;
     }
 }

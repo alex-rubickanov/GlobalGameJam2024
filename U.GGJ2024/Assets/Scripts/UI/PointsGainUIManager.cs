@@ -128,12 +128,15 @@ public class PointsGainUIManager : MonoBehaviour
         {
             case 0:
                 player1Points += value;
+                player1Points = Mathf.Clamp(player1Points, 0, 9999);
                 break;
             case 1:
                 player2Points += value;
+                player2Points = Mathf.Clamp(player2Points, 0, 9999);
                 break;
             case 2:
                 player3Points += value;
+                player3Points = Mathf.Clamp(player3Points, 0, 9999);
                 break;
         }
     }

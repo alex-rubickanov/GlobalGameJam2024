@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class NInputHandler : MonoBehaviour
 {
     public PlayerInput playerInput;
-
+    public InputDevice InputDevice => playerInput.devices[0];
+    public Gamepad gamepad;
     private Vector2 moveInput;
 
     public Action OnInteractPerformed;
@@ -20,17 +21,17 @@ public class NInputHandler : MonoBehaviour
 
     public Action OnCCLeft;
     public Action OnCCRight;
-
-    public Action OnConfirmLeftStarted;
-    public Action OnConfirmRightStarted;
-    public Action OnConfirmLeftCanceled;
-    public Action OnConfirmRightCanceled;
+    public Action OnReady;
 
     public bool WantsToRun { get; private set; }
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        if (InputDevice is Gamepad)
+        {
+            gamepad = InputDevice as Gamepad;
+        }
         ActivateInput();
     }
 
@@ -63,11 +64,7 @@ public class NInputHandler : MonoBehaviour
                     OnCharacterRight_performed;
                 playerInput.currentActionMap.FindAction("ChangeCharacterLeft").performed += OnCharacterLeft_performed;
 
-                playerInput.currentActionMap.FindAction("ConfirmReadyLeft", false).started += OnConfirmLeft_started;
-                playerInput.currentActionMap.FindAction("ConfirmReadyRight", false).started += OnConfirmRight_started;
-                playerInput.currentActionMap.FindAction("ConfirmReadyLeft", false).canceled += OnConfirmLeft_canceled;
-                playerInput.currentActionMap.FindAction("ConfirmReadyRight", false).canceled += OnConfirmRight_canceled;
-
+                playerInput.currentActionMap.FindAction("Ready", false).performed += OnReady_performed;
                 break;
             default:
                 Debug.LogError($"Player {playerInput.playerIndex} current action map is not found");
@@ -75,31 +72,15 @@ public class NInputHandler : MonoBehaviour
         }
     }
 
+    private void OnReady_performed(InputAction.CallbackContext obj)
+    {
+        OnReady?.Invoke();
+    }
+
     private void OnOpenBox_pefromed(InputAction.CallbackContext obj)
     {
         OnOpenBox?.Invoke();
     }
-
-    private void OnConfirmLeft_started(InputAction.CallbackContext obj)
-    {
-        OnConfirmLeftStarted?.Invoke();
-    }
-
-    private void OnConfirmRight_started(InputAction.CallbackContext obj)
-    {
-        OnConfirmRightStarted?.Invoke();
-    }
-
-    private void OnConfirmRight_canceled(InputAction.CallbackContext obj)
-    {
-        OnConfirmRightCanceled?.Invoke();
-    }
-
-    private void OnConfirmLeft_canceled(InputAction.CallbackContext obj)
-    {
-        OnConfirmLeftCanceled?.Invoke();
-    }
-
 
     private void OnMeleeHit_performed(InputAction.CallbackContext obj)
     {
@@ -191,5 +172,15 @@ public class NInputHandler : MonoBehaviour
     public void DeactivateInput()
     {
         playerInput.DeactivateInput();
+    }
+    
+    public void GamepadVibrate()
+    {
+        gamepad.SetMotorSpeeds(0.123f, 0.234f);
+    }
+    
+    public void StopGamepadVibration()
+    {
+        gamepad.SetMotorSpeeds(0, 0);
     }
 }
