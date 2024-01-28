@@ -16,7 +16,8 @@ public class Alcohol : GrabbableObject
                 hittedPlayer = null;
                 return;
             }
-            
+            SFX();
+            VFX();
             MakeDrunk();
         }
     }
@@ -33,5 +34,20 @@ public class Alcohol : GrabbableObject
             hittedPlayer.DrunkOn();
         }
         Destroy(gameObject);
+    }
+
+    //SFX And VFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.bottleSFx);
+    }
+    public VfxManager vfx => GetComponent<VfxManager>();
+    void VFX()
+    {
+        if (vfx != null)
+        {
+            vfx.SpawnVFX(vfx.vfxList[0], 2);
+        }
     }
 }
