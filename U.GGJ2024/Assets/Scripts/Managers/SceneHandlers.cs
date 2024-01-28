@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneHandler : MonoBehaviour
+public class SceneHandlers : MonoBehaviour
 {
     [SerializeField] public SceneType sceneType;
     [SerializeField] public bool enableJoining;
     [SerializeField] public Transform[] spawnPoints;
 
-    public static SceneHandler Instance { get; private set; }
+    public static SceneHandlers Instance { get; private set; }
 
     private void Awake()
     {

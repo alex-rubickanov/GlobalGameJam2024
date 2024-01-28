@@ -37,9 +37,9 @@ public class NCoopManager : MonoBehaviour
 
     private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        currentSceneType = SceneHandler.Instance.sceneType;
-        spawnPoints = SceneHandler.Instance.spawnPoints;
-        if (SceneHandler.Instance.enableJoining)
+        currentSceneType = SceneHandlers.Instance.sceneType;
+        spawnPoints = SceneHandlers.Instance.spawnPoints;
+        if (SceneHandlers.Instance.enableJoining)
         {
             playerInputManager.EnableJoining();
         }
