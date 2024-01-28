@@ -6,7 +6,6 @@ public class StunObject : MonoBehaviour
 {
     [SerializeField] public Transform playerPawnHolder;
     [SerializeField] protected float sleepTime = 2.0f;
-    
     protected NPlayerManager playerInside;
     protected bool isOccupied;
     

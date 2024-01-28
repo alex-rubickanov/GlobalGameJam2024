@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class GarbageCan : StunObject
 {
-    [Range(-9, 9)] 
+    [Range(-9, 9)]
     [SerializeField] private int points;
+    [SerializeField] GameObject throwUI;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -15,8 +16,21 @@ public class GarbageCan : StunObject
         if (playerInside && !isOccupied && playerInside.GrabbablePlayer.wasThrown)
         {
             SFX();
+            throwUI.SetActive(false);
             TrapPlayer(playerInside);
             UpdatePlayerPoints(playerInside);
+        }
+    }
+
+    private void Update()
+    {
+        if (isOccupied)
+        {
+            throwUI.SetActive(false);
+        }
+        else
+        {
+            throwUI.SetActive(true);
         }
     }
 

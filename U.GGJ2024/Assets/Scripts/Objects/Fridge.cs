@@ -5,6 +5,7 @@ public class Fridge : StunObject
 {
     [Range(-9, 9)]
     [SerializeField] private int points;
+    [SerializeField] GameObject throwUI;
     private void OnCollisionEnter(Collision other)
     {
         if(other.transform.GetComponentInParent<NPlayerManager>() == null) return;
@@ -19,7 +20,19 @@ public class Fridge : StunObject
             anim.PlayAnim(anim.PlayerEntered);
         }
     }
-    
+    private void Update()
+    {
+        if (isOccupied)
+        {
+            throwUI.SetActive(false);
+        }
+        else
+        {
+            throwUI.SetActive(true);
+        }
+    }
+
+
     protected override void TrapPlayer(NPlayerManager playerInside)
     {
         TrappedSFX();

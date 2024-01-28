@@ -315,6 +315,7 @@ MonoBehaviour:
   playerPawnHolder: {fileID: 24184999500545838}
   sleepTime: 2
   points: 4
+  throwUI: {fileID: 7635266225972469596}
 --- !u!1 &7782554490051513946
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +468,12 @@ PrefabInstance:
 --- !u!224 &4422498036666940396 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6731204853467774310, guid: c9f1e934c461d35429e66daa878ce23f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6932682148838229642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7635266225972469596 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 702631374457248214, guid: c9f1e934c461d35429e66daa878ce23f,
     type: 3}
   m_PrefabInstance: {fileID: 6932682148838229642}
   m_PrefabAsset: {fileID: 0}
