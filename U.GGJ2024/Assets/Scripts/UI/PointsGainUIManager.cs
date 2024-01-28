@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,7 +17,17 @@ public class PointsGainUIManager : MonoBehaviour
     [SerializeField] public List<GameObject> points;
 
     [SerializeField] Transform playerTransform;
-    [SerializeField] public RectTransform playerUI;
+    [SerializeField] public RectTransform player1UI;
+    [SerializeField] public RectTransform player2UI;
+    [SerializeField] public RectTransform player3UI;
+    
+    private int player1Points = 0;
+    private int player2Points = 0;
+    private int player3Points = 0;
+    
+    [SerializeField] private TextMeshProUGUI player1PointsText;
+    [SerializeField] private TextMeshProUGUI player2PointsText;
+    [SerializeField] private TextMeshProUGUI player3PointsText;
 
     private void Awake()
     {
@@ -32,10 +43,21 @@ public class PointsGainUIManager : MonoBehaviour
         InitObjectPool();
     }
 
-
-
-    public void ShowUIPoints(Transform worldPoint, int value)
+    private void Update()
     {
+        player1PointsText.text = player1Points.ToString();
+        player2PointsText.text = player2Points.ToString();
+        player3PointsText.text = player3Points.ToString();
+    }
+
+
+    public void ShowUIPoints(Transform playerTransform, int value)
+    {
+        NPlayerManager playerManager = playerTransform.GetComponentInParent<NPlayerManager>();
+                
+        int index = NCoopManager.Instance.players.FindIndex(x => x == playerManager);
+        
+        
         if (points.Count <= 0)
         {
             return;
@@ -60,20 +82,32 @@ public class PointsGainUIManager : MonoBehaviour
                 RectTransform rectTransform = point.GetComponent<RectTransform>();
 
                 // Convert world position to screen space
-                Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPoint.position);
+                Vector2 screenPos = Camera.main.WorldToScreenPoint(playerTransform.position);
 
                 rectTransform.position = new Vector3(screenPos.x, screenPos.y, 0f);
 
                 point.SetActive(true);
-
-                StartCoroutine(MoveToPlayerUI(rectTransform, playerUI));
+                
+                switch (index)
+                {
+                    case 0:
+                        StartCoroutine(MoveToPlayerUI(rectTransform, player1UI, index,value));
+                        break;
+                    case 1:
+                        StartCoroutine(MoveToPlayerUI(rectTransform, player2UI, index,value));
+                        break;
+                    case 2:
+                        StartCoroutine(MoveToPlayerUI(rectTransform, player3UI, index,value));
+                        break;
+                }
+                
                 StartCoroutine(SetPointsActiveToFalse(point));
                 break;
             }
         }
     }
 
-    IEnumerator MoveToPlayerUI(RectTransform rectTransform, Transform targetPosition)
+    IEnumerator MoveToPlayerUI(RectTransform rectTransform, Transform targetPosition, int index,int value)
     {
         float duration = 1f;
         float elapsedTime = 0f;
@@ -89,6 +123,19 @@ public class PointsGainUIManager : MonoBehaviour
 
         targetPosition.GetComponent<Animator>().SetTrigger("ReceivePoints");
         rectTransform.position = targetPosition.position;
+        yield return null;
+        switch (index)
+        {
+            case 0:
+                player1Points += value;
+                break;
+            case 1:
+                player2Points += value;
+                break;
+            case 2:
+                player3Points += value;
+                break;
+        }
     }
 
     IEnumerator SetPointsActiveToFalse(GameObject point)
@@ -105,6 +152,27 @@ public class PointsGainUIManager : MonoBehaviour
             pointsUI.transform.SetParent(parent);
             pointsUI.SetActive(false);
             points.Add(pointsUI);
+        }
+    }
+    
+    public int GetTheWinnerIndex()
+    {
+        int max = Mathf.Max(player1Points, player2Points, player1Points);
+        if(max == player1Points)
+        {
+            return 0;
+        }
+        else if(max == player2Points)
+        {
+            return 1;
+        }
+        else if(max == player3Points)
+        {
+            return 2;
+        }
+        else
+        {
+            return -1;
         }
     }
 }

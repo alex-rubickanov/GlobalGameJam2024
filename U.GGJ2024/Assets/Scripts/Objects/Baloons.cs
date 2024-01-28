@@ -15,7 +15,7 @@ public class Baloons : MonoBehaviour
         joint = GetComponentInChildren<FixedJoint>();
         rb = GetComponent<Rigidbody>();
 
-        transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 2.2f, transform.position.z);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -44,7 +44,7 @@ public class Baloons : MonoBehaviour
 
     private IEnumerator UpAndDestroy()
     {
-        rb.velocity = new Vector3(0, 3, 0);
+        rb.velocity = new Vector3(0, 2, 0);
         yield return new WaitForSeconds(flyTime);
         joint.connectedBody = null;
         takenPlayer.RagdollController.DisableRagdollWithDelay(3.0f);

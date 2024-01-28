@@ -9,6 +9,7 @@ public class WetFloorSign : GrabbableObject
     [SerializeField] private GameObject water;
     private bool isSpilled = false;
     [SerializeField] private float forceToLeg = 10.0f;
+
     protected override void Start()
     {
         base.Start();
@@ -33,26 +34,30 @@ public class WetFloorSign : GrabbableObject
         GetComponent<Rigidbody>().isKinematic = true;
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-        
+
         Destroy(gameObject, timeToDestroy);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!isSpilled) return;
-        if(other.CompareTag("Player"))
+        if (!isSpilled) return;
+        if (other.CompareTag("Player"))
         {
             NPlayerManager playerManager = other.gameObject.GetComponentInParent<NPlayerManager>();
-            if(playerManager.RagdollController.isRagdoll) return;
-            
+            if (playerManager.RagdollController.isRagdoll) return;
+
             playerManager.RagdollController.EnableRagdoll();
-            playerManager.RagdollController.GetRandomLeg().AddForce(other.transform.forward * forceToLeg, ForceMode.Impulse);
+            playerManager.RagdollController.GetRandomLeg()
+                .AddForce(other.transform.forward * forceToLeg, ForceMode.Impulse);
             playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
             SFX();
-            UpdatePlayerPoints();
+            if (playerManager != lastGrabbedByPlayer.playerManager)
+            {
+                UpdatePlayerPoints();
+            }
         }
     }
-    
+
     private void UpdatePlayerPoints()
     {
         PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, points);
