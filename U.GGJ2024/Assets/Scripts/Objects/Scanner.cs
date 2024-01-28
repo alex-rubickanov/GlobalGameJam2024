@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
-    [Range(-9, 9)] [SerializeField] private int points;
+    [Range(-9, 9)] [SerializeField] private int pointsIfFace;
+    [Range(-9, 9)] [SerializeField] private int pointsIfButt;
     private NPlayerManager scannedPlayer;
     [SerializeField] private float sleepTime = 2.0f;
     private bool isCooldown = false;
@@ -22,7 +23,6 @@ public class Scanner : MonoBehaviour
         if (scannedPlayer && !isCooldown && scannedPlayer.GrabbablePlayer.wasThrown)
         {
             ScanPlayer(scannedPlayer);
-            UpdatePlayerPoints(scannedPlayer);
         }
     }
 
@@ -35,19 +35,27 @@ public class Scanner : MonoBehaviour
         if (random <= 20)
         {
             Transform buttPhotoObj = Instantiate(buttPhoto, photoSpawnPoint.position, photoSpawnPoint.rotation);
+            UpdatePlayerPointsFace(nPlayerManager);
             Destroy(buttPhotoObj.gameObject, 2.0f);
         }
         else
         {
+            UpdatePlayerPointsButt(nPlayerManager);
             Transform facePhotoObj = Instantiate(facePhoto, photoSpawnPoint.position, photoSpawnPoint.rotation);
             Destroy(facePhotoObj.gameObject, 2.0f);
         }
     }
     
-    private void UpdatePlayerPoints(NPlayerManager scannedPlayer)
+    private void UpdatePlayerPointsFace(NPlayerManager scannedPlayer)
     {
         PointsGainUIManager.instance.ShowUIPoints(
-            scannedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, points);
+            scannedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, pointsIfFace);
+    }
+    
+    private void UpdatePlayerPointsButt(NPlayerManager scannedPlayer)
+    {
+        PointsGainUIManager.instance.ShowUIPoints(
+            scannedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, pointsIfButt);
     }
     
     protected IEnumerator Cooldown()

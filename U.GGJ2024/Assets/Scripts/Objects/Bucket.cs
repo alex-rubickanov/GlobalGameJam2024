@@ -19,7 +19,7 @@ public class Bucket : GrabbableObject
                 bucketedPlayer = null;
                 return;
             }
-            
+            UpdatePlayerPoints();
             BucketOn();
         }
     }

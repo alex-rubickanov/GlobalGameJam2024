@@ -154,4 +154,25 @@ public class PointsGainUIManager : MonoBehaviour
             points.Add(pointsUI);
         }
     }
+    
+    public int GetTheWinnerIndex()
+    {
+        int max = Mathf.Max(player1Points, player2Points, player1Points);
+        if(max == player1Points)
+        {
+            return 0;
+        }
+        else if(max == player2Points)
+        {
+            return 1;
+        }
+        else if(max == player3Points)
+        {
+            return 2;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 }
