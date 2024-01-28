@@ -8,10 +8,10 @@ public class NPlayerAnimator : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController connectionMenuController;
     [SerializeField] private RuntimeAnimatorController gameplayController;
     [SerializeField] private RuntimeAnimatorController currentAnimatorController;
-    
+
     private NPlayerManager playerManager;
-    private Animator animator => GetComponent<Animator>();
-    
+    private Animator animator;
+
     private static readonly int IsGrabbing = Animator.StringToHash("IsGrabbing");
     private static readonly int Velocity = Animator.StringToHash("Velocity");
     private static readonly int IsCharging = Animator.StringToHash("IsCharging");
@@ -28,12 +28,17 @@ public class NPlayerAnimator : MonoBehaviour
     private static readonly int Default = Animator.StringToHash("Default");
 
     public Action OnMeleeHit;
-    private PlayerCharacterSelector playerCharacterSelector => GetComponentInParent<PlayerCharacterSelector>();
+    private PlayerCharacterSelector playerCharacterSelector;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        playerCharacterSelector = GetComponentInParent<PlayerCharacterSelector>();
+    }
 
     private void Start()
     {
         playerManager = GetComponentInParent<NPlayerManager>();
-        //animator = GetComponent<Animator>();
     }
 
     public void SubscribeToEvents()
@@ -95,7 +100,7 @@ public class NPlayerAnimator : MonoBehaviour
         {
             animator.SetFloat(Velocity, playerManager.PlayerMovement.GetVelocityMagnitude());
             animator.SetBool(Grounded, playerManager.PlayerMovement.IsGrounded);
-            
+
             animator.SetBool(IsGrabbing, playerManager.PlayerGrabbing.isGrabbing);
             animator.SetBool(IsCharging, playerManager.PlayerGrabbing.IsCharging);
             animator.SetBool(IsGrabbed, playerManager.GrabbablePlayer.isGrabbed);
@@ -106,6 +111,7 @@ public class NPlayerAnimator : MonoBehaviour
             animator.SetFloat(Velocity, 0);
         }
     }
+
     public void MeleeHitAnimationEvent()
     {
         OnMeleeHit?.Invoke();
@@ -129,15 +135,15 @@ public class NPlayerAnimator : MonoBehaviour
         {
             case SceneType.ConnectionMenu:
                 SetConnectionMenuController();
+                SubscribeToEvents();
                 break;
             case SceneType.Gameplay:
                 SetGameplayController();
+                SubscribeToEvents();
                 break;
             default:
                 Debug.LogError($"Error: {sceneType} is not a valid SceneAnimatorEnum");
                 break;
         }
     }
-    
-    
 }

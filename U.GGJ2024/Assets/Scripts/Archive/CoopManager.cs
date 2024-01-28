@@ -17,7 +17,6 @@ public class CoopManager : MonoBehaviour
     private void Awake()
     {
         PlayerInputManager = GetComponent<PlayerInputManager>();
-        DontDestroyOnLoad(gameObject);
 
         if (Instance == null)
         {
@@ -27,6 +26,7 @@ public class CoopManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
