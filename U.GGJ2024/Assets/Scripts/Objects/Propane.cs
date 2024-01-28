@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Propane : GrabbableObject
 {
@@ -10,12 +11,14 @@ public class Propane : GrabbableObject
     [SerializeField] private float timeToExplode = 3.0f;
     [SerializeField] private float explosionForce = 10.0f;
     [SerializeField] private float explosionRadius = 5.0f;
-
+    
     private MeshRenderer meshRenderer;
     private float explodeTimer;
 
     private bool once = false;
     private bool once2 = false;
+
+    public UnityEvent OnExplosion;
 
     protected override void Start()
     {
@@ -44,6 +47,8 @@ public class Propane : GrabbableObject
         if (!once)
         {
             ParticleSystem particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            OnExplosion.Invoke();
+            SFX();
             Destroy(particle, 5.0f);
         }
 
@@ -92,5 +97,11 @@ public class Propane : GrabbableObject
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+    
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.bombSfx);
     }
 }

@@ -15,6 +15,7 @@ public class EndGame : MonoBehaviour
     
     private PointsGainUIManager pointsGainUiManager;
     private bool timerStop = false;
+    bool winnerSfxPlayed;
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class EndGame : MonoBehaviour
     private void FinishGame()
     {
         int winnerIndex = pointsGainUiManager.GetTheWinnerIndex();
-
+        WinnerSFX();
         switch (winnerIndex)
         {
             case 0:
@@ -61,7 +62,16 @@ public class EndGame : MonoBehaviour
                 Debug.Log("No one wins");
                 break;
         }
-
         Time.timeScale = 0.3f;
+    }
+
+    void WinnerSFX()
+    {
+        if (!winnerSfxPlayed)
+        {
+            winnerSfxPlayed = true;
+            AudioManager audioManager = AudioManager.instance;
+            audioManager.PlayOneShotSfx(audioManager.winner);
+        }
     }
 }

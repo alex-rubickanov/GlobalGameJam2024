@@ -33,6 +33,7 @@ public class NPlayerMovement : MonoBehaviour
     
     public Action OnJumpStart;
     public bool IsGrounded => Physics.CheckSphere(groundCheck.position, groundCheckRadius);
+    private bool IsJumpGrounded => Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
 
     private void Start()
     {
@@ -112,7 +113,7 @@ public class NPlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (!IsGrounded) return;
+        if (!IsJumpGrounded) return;
 
         rb.velocity += new Vector3(0, jumpHeight, 0);
         OnJumpStart?.Invoke();

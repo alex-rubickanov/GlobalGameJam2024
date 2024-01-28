@@ -26,6 +26,7 @@ public class Bucket : GrabbableObject
 
     private void BucketOn()
     {
+        SFX();
         bucketedPlayer.BucketOn();
         Destroy(gameObject);
     }
@@ -33,5 +34,11 @@ public class Bucket : GrabbableObject
     private void UpdatePlayerPoints()
     {
         PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, points);
+    }
+
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.bonkSfx);
     }
 }

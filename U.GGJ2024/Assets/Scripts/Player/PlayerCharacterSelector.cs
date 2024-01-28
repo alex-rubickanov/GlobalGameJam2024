@@ -59,5 +59,13 @@ public class PlayerCharacterSelector : MonoBehaviour
         currentCharacter.SetActive(false);
         currentCharacter = characters[index];
         currentCharacter.SetActive(true);
+
+        SFX();
+    }
+    //added SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.characterJoin);
     }
 }

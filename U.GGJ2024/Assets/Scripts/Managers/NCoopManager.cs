@@ -37,15 +37,21 @@ public class NCoopManager : MonoBehaviour
 
     private void SceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        currentSceneType = SceneHandler.Instance.sceneType;
-        spawnPoints = SceneHandler.Instance.spawnPoints;
-        if (SceneHandler.Instance.enableJoining)
+        currentSceneType = SceneHandlers.Instance.sceneType;
+        spawnPoints = SceneHandlers.Instance.spawnPoints;
+        if (SceneHandlers.Instance.enableJoining)
         {
             playerInputManager.EnableJoining();
         }
         else
         {
             playerInputManager.DisableJoining();
+        }
+        foreach(var player in players)
+        {
+            player.SetSpawnPoint(spawnPoints[spawnPoints.Length - 1]);
+            player.DespawnPlayer();
+            player.SpawnPlayer();
         }
     }
 
@@ -55,6 +61,7 @@ public class NCoopManager : MonoBehaviour
         players.Add(playerManager);
 
         playerManager.SetSpawnPoint(spawnPoints[players.Count - 1]);
+        playerManager.SetupPlayerSprite(players.Count - 1);
         
         DontDestroyOnLoad(playerManager.gameObject);
     }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3983983771369062339}
   - component: {fileID: 5012324589075729782}
   - component: {fileID: 3517490949824575537}
+  - component: {fileID: 1255811161737765376}
   m_Layer: 8
   m_Name: Propane
   m_TagString: Untagged
@@ -131,6 +132,21 @@ MonoBehaviour:
   timeToExplode: 3
   explosionForce: 300
   explosionRadius: 2.71
+  OnExplosion:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1255811161737765376}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!54 &3517490949824575537
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -158,3 +174,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &1255811161737765376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6718263318989446307}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b6b88d425f7234aae309cb9a973743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Delay: 0
+  MaximumStress: 0.6
+  Range: 60
