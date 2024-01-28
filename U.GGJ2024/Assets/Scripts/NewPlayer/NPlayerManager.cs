@@ -63,12 +63,16 @@ public class NPlayerManager : MonoBehaviour
     {
         InputHandler.SubscribeToInputs(NCoopManager.Instance.currentSceneType);
         PlayerAnimator.SetAnimator(NCoopManager.Instance.currentSceneType);
+        if (NCoopManager.Instance.currentSceneType == SceneType.Gameplay)
+        {
+            InputHandler.OnUnStun += UnStan_pressed;
+        }
     }
 
     private void UnStan_pressed()
     {
         if (!isStun) return;
-
+        Debug.Log("TRIES TO ESCAPE");
         pressCount++;
         if (pressCount >= pressToUnStun)
         {

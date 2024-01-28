@@ -98,6 +98,7 @@ public class NPlayerGrabbing : MonoBehaviour
         if (grabbedObject)
         {
             grabbedObject.Throw(force);
+            SFX();
         }
         
         throwPower = 0;

@@ -53,7 +53,7 @@ public class Fridge : StunObject
     
     private void UpdatePlayerPoints(NPlayerManager trappedPlayer)
     {
-        PointsGainUIManager.instance.ShowUIPoints(trappedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, points);
+        //PointsGainUIManager.instance.ShowUIPoints(trappedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, points);
     }
 
     public FridgeAnimator anim => GetComponent<FridgeAnimator>();

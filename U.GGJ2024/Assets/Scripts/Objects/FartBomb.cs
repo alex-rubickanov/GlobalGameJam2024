@@ -40,7 +40,7 @@ public class FartBomb : GrabbableObject
         NPlayerManager playerManager;
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Player") || collider.GetComponentInParent<NPlayerManager>())
+            if (collider.CompareTag("Player"))
             {
                 playerManager = collider.gameObject.GetComponentInParent<NPlayerManager>();
                 playerManager.FartOn();
