@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,7 +15,7 @@ public class PlayerCharacterSelector : MonoBehaviour
     
     private void Start()
     {
-        inputHandler = GetComponent<NInputHandler>();
+        inputHandler = GetComponentInParent<NInputHandler>();
 
         inputHandler.OnCCLeft += OnCCLeft;
         inputHandler.OnCCRight += OnCCRight;

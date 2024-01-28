@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class NPlayerManager : MonoBehaviour
 {
-    [HideInInspector] public NInputHandler InputHandler => GetComponent<NInputHandler>();
-    [HideInInspector] public NPlayerMovement PlayerMovement => GetComponentInChildren<NPlayerMovement>();
-    [HideInInspector] public NPlayerGrabbing PlayerGrabbing => GetComponentInChildren<NPlayerGrabbing>();
-    [HideInInspector] public GrabbablePlayer GrabbablePlayer => GetComponentInChildren<GrabbablePlayer>();
-    [HideInInspector] public NPlayerAnimator PlayerAnimator => GetComponentInChildren<NPlayerAnimator>();
-    [HideInInspector] public RagdollController RagdollController => GetComponentInChildren<RagdollController>();
+    [HideInInspector] public NInputHandler InputHandler;
+    [HideInInspector] public NPlayerMovement PlayerMovement;
+    [HideInInspector] public NPlayerGrabbing PlayerGrabbing;
+    [HideInInspector] public GrabbablePlayer GrabbablePlayer;
+    [HideInInspector] public NPlayerAnimator PlayerAnimator;
+    [HideInInspector] public RagdollController RagdollController;
 
     public Transform playerPawn;
     public Transform playerModel;
@@ -26,20 +27,38 @@ public class NPlayerManager : MonoBehaviour
     private int pressCount = 0;
     
     private StunObject stunObject;
-
+    
+    private Transform spawnPoint;
+    
+    
     private void Awake()
     {
-        //InputHandler = GetComponent<NInputHandler>();
-        //PlayerMovement = GetComponentInChildren<NPlayerMovement>();
-        //PlayerGrabbing = GetComponentInChildren<NPlayerGrabbing>();
-        //PlayerAnimator = GetComponentInChildren<NPlayerAnimator>();
-        //RagdollController = GetComponentInChildren<RagdollController>();
-        //GrabbablePlayer = GetComponentInChildren<GrabbablePlayer>();
+        InputHandler = GetComponent<NInputHandler>();
+        PlayerMovement = GetComponentInChildren<NPlayerMovement>();
+        PlayerGrabbing = GetComponentInChildren<NPlayerGrabbing>();
+        PlayerAnimator = GetComponentInChildren<NPlayerAnimator>();
+        RagdollController = GetComponentInChildren<RagdollController>();
+        GrabbablePlayer = GetComponentInChildren<GrabbablePlayer>();
+        
+        DespawnPlayer();
     }
 
     private void Start()
     {
-        InputHandler.OnUnStun += UnStan_pressed;
+        if (NCoopManager.Instance.currentSceneType == SceneType.Gameplay)
+        {
+            InputHandler.OnUnStun += UnStan_pressed;
+        }
+        
+        SpawnPlayer();
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        InputHandler.SubscribeToInputs(NCoopManager.Instance.currentSceneType);
+        PlayerAnimator.SetAnimator(NCoopManager.Instance.currentSceneType);
     }
 
     private void UnStan_pressed()
@@ -130,6 +149,23 @@ public class NPlayerManager : MonoBehaviour
         RagdollController.DisableRagdoll();
 
         PlayerMovement.isFart = false;
+    }
 
+    public void DespawnPlayer()
+    {
+        playerPawn.gameObject.SetActive(false);
+    }
+    
+    public void SpawnPlayer()
+    {
+        playerPawn.position = spawnPoint.position;
+        playerPawn.rotation = spawnPoint.rotation;
+        
+        playerPawn.gameObject.SetActive(true);
+    }
+    
+    public void SetSpawnPoint(Transform _spawnPoint)
+    {
+        spawnPoint = _spawnPoint;
     }
 }

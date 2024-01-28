@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class NInputHandler : MonoBehaviour
 {
-    public PlayerInput playerInput => GetComponent<PlayerInput>();
+    public PlayerInput playerInput;
 
     private Vector2 moveInput;
 
@@ -29,11 +29,7 @@ public class NInputHandler : MonoBehaviour
 
     private void Awake()
     {
-        //playerInput = GetComponent<PlayerInput>();
-    }
-
-    private void Start()
-    {
+        playerInput = GetComponent<PlayerInput>();
         ActivateInput();
     }
 
@@ -43,6 +39,8 @@ public class NInputHandler : MonoBehaviour
         {
             case SceneType.Gameplay:
                 Debug.Log("Subscribed to gameplay");
+                if(!playerInput) Debug.Log("Player input is null");
+                playerInput.SwitchCurrentActionMap("Gameplay");
                 playerInput.currentActionMap.FindAction("Move", false).performed += OnMove_performed;
                 playerInput.currentActionMap.FindAction("Move", false).canceled += OnMove_canceled;
                 playerInput.currentActionMap.FindAction("Interact", false).performed += OnInteract_performed;
@@ -58,6 +56,7 @@ public class NInputHandler : MonoBehaviour
                 break;
             case SceneType.ConnectionMenu:
                 Debug.Log("Subscribed to connection menu");
+                playerInput.SwitchCurrentActionMap("ConnectionMenu");
                 playerInput.currentActionMap.FindAction("ChangeCharacterRight", false).performed +=
                     OnCharacterRight_performed;
                 playerInput.currentActionMap.FindAction("ChangeCharacterLeft").performed += OnCharacterLeft_performed;
