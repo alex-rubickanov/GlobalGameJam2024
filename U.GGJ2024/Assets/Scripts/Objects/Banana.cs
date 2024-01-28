@@ -57,6 +57,7 @@ public class Banana : GrabbableObject
             
             if (!once)
             {
+                SFX();
                 Destroy(gameObject, timeToDestroy);
             }
         }
@@ -72,5 +73,15 @@ public class Banana : GrabbableObject
     {
         if (playerManager.playerPawn == lastGrabbedByPlayer.playerManager.playerPawn) return;
         PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn, points);
+    }
+
+
+
+
+    //SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.SlideSfx);
     }
 }

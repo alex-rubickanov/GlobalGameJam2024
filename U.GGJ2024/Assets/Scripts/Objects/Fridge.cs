@@ -22,6 +22,7 @@ public class Fridge : StunObject
     
     protected override void TrapPlayer(NPlayerManager playerInside)
     {
+        TrappedSFX();
         isOccupied = true;
         playerInside.Stun(this);
         playerInside.playerModel.gameObject.SetActive(false);
@@ -43,4 +44,12 @@ public class Fridge : StunObject
     }
 
     public FridgeAnimator anim => GetComponent<FridgeAnimator>();
+
+
+    //SFX
+    void TrappedSFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.playerTrappedSfx);
+    }
 }

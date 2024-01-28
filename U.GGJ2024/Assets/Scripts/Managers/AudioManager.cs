@@ -11,6 +11,13 @@ public class AudioManager : MonoBehaviour
     [Header("SFX")]
     public AudioClip fartBombSfx;
     public AudioClip bottleSFx;
+    public AudioClip SlideSfx;
+    public AudioClip BalloonSFx;
+    public AudioClip bombSfx;
+    public AudioClip bonkSfx;
+    public AudioClip playerTrappedSfx;
+    public AudioClip scanSFX;
+    public AudioClip throwSFX;
     void Awake()
     {
         if(instance == null)
