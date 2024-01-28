@@ -6,6 +6,10 @@ using UnityEngine.Serialization;
 
 public class FartBomb : GrabbableObject
 {
+    [Range(-9, 9)]
+    [SerializeField] private int pointsToWhoThrowed;
+    [Range(-9, 9)]
+    [SerializeField] private int pointsToWhoWasAffected;
     [SerializeField] private float explosionRadius;
     private bool once = false;
 
@@ -38,11 +42,18 @@ public class FartBomb : GrabbableObject
             {
                 playerManager = collider.gameObject.GetComponentInParent<NPlayerManager>();
                 playerManager.FartOn();
+                UpdatePlayerPoints(playerManager);
             }
         }
 
         canBeGrabbed = false;
         Destroy(gameObject, 5);
+    }
+    
+    private void UpdatePlayerPoints(NPlayerManager affectedPlayer)
+    {
+        PointsGainUIManager.instance.ShowUIPoints(affectedPlayer.playerPawn.transform, pointsToWhoWasAffected);
+        PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, pointsToWhoThrowed);
     }
 
     private void OnDrawGizmosSelected()

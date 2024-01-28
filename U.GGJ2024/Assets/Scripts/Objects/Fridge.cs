@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Fridge : StunObject
 {
+    [Range(-9, 9)]
+    [SerializeField] private int points;
     private void OnCollisionEnter(Collision other)
     {
         if(other.transform.GetComponentInParent<NPlayerManager>() == null) return;
@@ -13,6 +15,7 @@ public class Fridge : StunObject
         if (playerInside && !isOccupied && playerInside.GrabbablePlayer.wasThrown)
         {
             TrapPlayer(playerInside);
+            UpdatePlayerPoints(playerInside);
             anim.PlayAnim(anim.PlayerEntered);
         }
     }
@@ -24,7 +27,7 @@ public class Fridge : StunObject
         playerInside.playerModel.gameObject.SetActive(false);
         
         playerInside.playerPawn.transform.position = playerPawnHolder.position;
-        playerInside.playerPawn.transform.rotation = playerPawnHolder.rotation;     
+        playerInside.playerPawn.transform.rotation = playerPawnHolder.rotation;
     }
     
     public override void UnTrapPlayer()
@@ -32,6 +35,11 @@ public class Fridge : StunObject
         playerInside.playerModel.gameObject.SetActive(true);
         playerInside = null;
         StartCoroutine(EnableCanWithDelay());
+    }
+    
+    private void UpdatePlayerPoints(NPlayerManager trappedPlayer)
+    {
+        PointsGainUIManager.instance.ShowUIPoints(trappedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, points);
     }
 
     public FridgeAnimator anim => GetComponent<FridgeAnimator>();

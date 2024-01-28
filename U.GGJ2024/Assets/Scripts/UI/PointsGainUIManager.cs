@@ -10,8 +10,9 @@ public class PointsGainUIManager : MonoBehaviour
     [SerializeField] GameObject pointsGainUI;
     [SerializeField] Transform parent;
 
-    [Header("Object Pooling")]
-    [SerializeField] float numberOfObj = 10f;
+    [Header("Object Pooling")] [SerializeField]
+    float numberOfObj = 10f;
+
     [SerializeField] public List<GameObject> points;
 
     [SerializeField] Transform playerTransform;
@@ -31,16 +32,28 @@ public class PointsGainUIManager : MonoBehaviour
         InitObjectPool();
     }
 
-    public void ShowUIPoints(Transform worldPoint, float value)
+    public void ShowUIPoints(Transform worldPoint, int value)
     {
-        if (points.Count <= 0) { return; }
+        if (points.Count <= 0)
+        {
+            return;
+        }
 
         foreach (GameObject point in points)
         {
             if (!point.activeSelf)
             {
                 TextMeshProUGUI textMesh = point.GetComponentInChildren<TextMeshProUGUI>();
-                textMesh.SetText($"+{value}");
+                if (value < 0)
+                {
+                    textMesh.color = Color.red;
+                    textMesh.SetText($"{value}");
+                }
+                else
+                {
+                    textMesh.color = Color.green;
+                    textMesh.SetText($"+{value}");
+                }
 
                 RectTransform rectTransform = point.GetComponent<RectTransform>();
 
@@ -71,6 +84,7 @@ public class PointsGainUIManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         targetPosition.GetComponent<Animator>().SetTrigger("ReceivePoints");
         rectTransform.position = targetPosition.position;
     }

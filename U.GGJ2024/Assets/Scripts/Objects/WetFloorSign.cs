@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WetFloorSign : GrabbableObject
 {
+    [Range(-9, 9)] [SerializeField] private int points;
+    [SerializeField] private float timeToDestroy;
     [SerializeField] private GameObject water;
     private bool isSpilled = false;
     [SerializeField] private float forceToLeg = 10.0f;
@@ -31,6 +33,8 @@ public class WetFloorSign : GrabbableObject
         GetComponent<Rigidbody>().isKinematic = true;
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+        
+        Destroy(gameObject, timeToDestroy);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +48,13 @@ public class WetFloorSign : GrabbableObject
             playerManager.RagdollController.EnableRagdoll();
             playerManager.RagdollController.GetRandomLeg().AddForce(other.transform.forward * forceToLeg, ForceMode.Impulse);
             playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
+            
+            UpdatePlayerPoints();
         }
+    }
+    
+    private void UpdatePlayerPoints()
+    {
+        PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, points);
     }
 }

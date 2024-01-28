@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
+    [Range(-9, 9)] [SerializeField] private int points;
     private NPlayerManager scannedPlayer;
     [SerializeField] private float sleepTime = 2.0f;
     private bool isCooldown = false;
@@ -21,6 +22,7 @@ public class Scanner : MonoBehaviour
         if (scannedPlayer && !isCooldown && scannedPlayer.GrabbablePlayer.wasThrown)
         {
             ScanPlayer(scannedPlayer);
+            UpdatePlayerPoints(scannedPlayer);
         }
     }
 
@@ -40,6 +42,12 @@ public class Scanner : MonoBehaviour
             Transform facePhotoObj = Instantiate(facePhoto, photoSpawnPoint.position, photoSpawnPoint.rotation);
             Destroy(facePhotoObj.gameObject, 2.0f);
         }
+    }
+    
+    private void UpdatePlayerPoints(NPlayerManager scannedPlayer)
+    {
+        PointsGainUIManager.instance.ShowUIPoints(
+            scannedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, points);
     }
     
     protected IEnumerator Cooldown()
