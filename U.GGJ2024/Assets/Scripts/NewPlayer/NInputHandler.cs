@@ -16,6 +16,7 @@ public class NInputHandler : MonoBehaviour
     public Action OnJump;
     public Action OnPause;
     public Action OnUnStun;
+    public Action OnOpenBox;
 
     public Action OnCCLeft;
     public Action OnCCRight;
@@ -51,6 +52,7 @@ public class NInputHandler : MonoBehaviour
                 playerInput.currentActionMap.FindAction("Run", false).canceled += OnRun_canceled;
                 playerInput.currentActionMap.FindAction("Pause", false).canceled += OnPause_performed;
                 playerInput.currentActionMap.FindAction("UnStun", false).performed += OnMeleeHit_performed;
+                playerInput.currentActionMap.FindAction("OpenBox", false).performed += OnOpenBox_pefromed;
                 
                 
                 break;
@@ -71,6 +73,11 @@ public class NInputHandler : MonoBehaviour
                 Debug.LogError($"Player {playerInput.playerIndex} current action map is not found");
                 break;
         }
+    }
+
+    private void OnOpenBox_pefromed(InputAction.CallbackContext obj)
+    {
+        OnOpenBox?.Invoke();
     }
 
     private void OnConfirmLeft_started(InputAction.CallbackContext obj)

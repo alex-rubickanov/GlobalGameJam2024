@@ -26,4 +26,14 @@ public class SceneHandler : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    public void MainScene()
+    {
+        foreach (var player in NCoopManager.Instance.players)
+        {
+            Destroy(player.gameObject);
+        }
+
+        SceneManager.LoadScene(0);
+    }
 }

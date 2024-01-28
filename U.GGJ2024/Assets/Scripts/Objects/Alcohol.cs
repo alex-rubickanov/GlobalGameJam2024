@@ -3,6 +3,8 @@ using UnityEngine;
 public class Alcohol : GrabbableObject
 {
     private NPlayerManager hittedPlayer;
+    [Range(-9, 9)]
+    [SerializeField] private int points;
     protected override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -16,8 +18,11 @@ public class Alcohol : GrabbableObject
                 hittedPlayer = null;
                 return;
             }
+			UpdatePlayerPoints();
+			
             SFX();
             VFX();
+            
             MakeDrunk();
         }
     }
@@ -49,5 +54,11 @@ public class Alcohol : GrabbableObject
         {
             vfx.SpawnVFX(vfx.vfxList[0], 2);
         }
+    
+    
+    private void UpdatePlayerPoints()
+    {
+        PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, points);
+    
     }
 }

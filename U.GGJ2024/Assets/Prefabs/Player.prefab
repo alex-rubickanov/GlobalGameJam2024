@@ -1305,6 +1305,7 @@ GameObject:
   - component: {fileID: 8120311491017495669}
   - component: {fileID: 5952996323369166024}
   - component: {fileID: 994026714178385208}
+  - component: {fileID: 1673811985779805023}
   m_Layer: 31
   m_Name: PlayerPawn
   m_TagString: Player
@@ -1525,6 +1526,20 @@ MonoBehaviour:
   - {fileID: 7669564078796369849}
   - {fileID: 9159374617415089451}
   - {fileID: 7331613319622915773}
+--- !u!114 &1673811985779805023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292251425424325919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6299427d3079e36499a167e0cfdf092b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactOrigin: {fileID: 8097911013439571291}
+  detectionSphereRadius: 2.47
 --- !u!1 &1335078044573566533
 GameObject:
   m_ObjectHideFlags: 0

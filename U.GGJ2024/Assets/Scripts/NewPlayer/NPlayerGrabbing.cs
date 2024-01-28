@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NPlayerGrabbing : MonoBehaviour
 {
-    private NPlayerManager playerManager;
+    public NPlayerManager playerManager;
     private Rigidbody rb;
     private Collider col;
 

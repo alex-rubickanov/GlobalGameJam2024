@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Propane : GrabbableObject
 {
+    [Range(-9, 9)] [SerializeField] private int points;
     [SerializeField] private ParticleSystem explosionParticle;
     [SerializeField] private float timeToExplode = 3.0f;
     [SerializeField] private float explosionForce = 10.0f;
@@ -26,7 +27,7 @@ public class Propane : GrabbableObject
     protected override void Update()
     {
         base.Update();
-        
+
         explodeTimer -= Time.deltaTime;
         if (explodeTimer <= 0)
         {
@@ -45,6 +46,7 @@ public class Propane : GrabbableObject
             ParticleSystem particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
             Destroy(particle, 5.0f);
         }
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         Rigidbody rigidbody;
         foreach (Collider collider in colliders)
@@ -62,6 +64,8 @@ public class Propane : GrabbableObject
                 playerManager.RagdollController.pelvisRigidbody.AddForce(forceDirection * explosionForce,
                     ForceMode.Impulse);
                 playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
+                
+                UpdatePlayerPoints(playerManager);
             }
             else if (collider.transform.TryGetComponent(out rigidbody))
             {
@@ -76,6 +80,12 @@ public class Propane : GrabbableObject
 
         meshRenderer.enabled = false;
         Destroy(gameObject, 5);
+    }
+
+    private void UpdatePlayerPoints(NPlayerManager affectedPlayer)
+    {
+        PointsGainUIManager.instance.ShowUIPoints(
+            affectedPlayer.playerPawn, points);
     }
 
     private void OnDrawGizmosSelected()

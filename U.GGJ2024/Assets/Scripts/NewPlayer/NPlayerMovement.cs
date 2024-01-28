@@ -32,7 +32,7 @@ public class NPlayerMovement : MonoBehaviour
     private float timer;
     
     public Action OnJumpStart;
-    public bool IsGrounded => Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
+    public bool IsGrounded => Physics.CheckSphere(groundCheck.position, groundCheckRadius);
 
     private void Start()
     {

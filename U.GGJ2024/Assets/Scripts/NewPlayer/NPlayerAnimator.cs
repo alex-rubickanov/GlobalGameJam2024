@@ -34,11 +34,13 @@ public class NPlayerAnimator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerCharacterSelector = GetComponentInParent<PlayerCharacterSelector>();
+        
     }
 
     private void Start()
     {
         playerManager = GetComponentInParent<NPlayerManager>();
+        
     }
 
     public void SubscribeToEvents()

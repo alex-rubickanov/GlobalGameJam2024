@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Bucket : GrabbableObject
 {
+    [Range(-9, 9)]
+    [SerializeField] private int points;
     private NPlayerManager bucketedPlayer;
 
     protected override void OnCollisionEnter(Collision other)
@@ -26,5 +28,10 @@ public class Bucket : GrabbableObject
     {
         bucketedPlayer.BucketOn();
         Destroy(gameObject);
+    }
+    
+    private void UpdatePlayerPoints()
+    {
+        PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, points);
     }
 }

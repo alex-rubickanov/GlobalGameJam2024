@@ -32,6 +32,7 @@ public class NCoopManager : MonoBehaviour
     private void Start()
     {
         SceneManager.sceneLoaded += SceneLoaded;
+        SceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void SceneLoaded(Scene arg0, LoadSceneMode arg1)

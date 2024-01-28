@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Banana : GrabbableObject
 {
+    [Range(-9, 9)]
+    [SerializeField] private int points;
     private MeshRenderer meshRenderer;
     [SerializeField] private float delayToHide = 1f;
     [SerializeField] private float forceToLeg = 10.0f;
@@ -50,6 +52,9 @@ public class Banana : GrabbableObject
             playerManager.RagdollController.EnableRagdoll();
             playerManager.RagdollController.GetRandomLeg().AddForce(other.transform.forward * forceToLeg, ForceMode.Impulse);
             playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
+            
+            UpdatePlayerPoints(playerManager);
+            
             if (!once)
             {
                 Destroy(gameObject, timeToDestroy);
@@ -61,5 +66,11 @@ public class Banana : GrabbableObject
     {
         yield return new WaitForSeconds(delayToHide);
         meshRenderer.enabled = false;
+    }
+    
+    private void UpdatePlayerPoints(NPlayerManager playerManager)
+    {
+        if (playerManager.playerPawn == lastGrabbedByPlayer.playerManager.playerPawn) return;
+        PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn, points);
     }
 }
