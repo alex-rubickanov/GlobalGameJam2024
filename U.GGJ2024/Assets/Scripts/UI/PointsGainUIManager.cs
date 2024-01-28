@@ -16,7 +16,7 @@ public class PointsGainUIManager : MonoBehaviour
 
     [SerializeField] public List<GameObject> points;
 
-    [SerializeField] Transform playerTransform;
+    //[SerializeField] Transform playerTransform;
     [SerializeField] public RectTransform player1UI;
     [SerializeField] public RectTransform player2UI;
     [SerializeField] public RectTransform player3UI;
