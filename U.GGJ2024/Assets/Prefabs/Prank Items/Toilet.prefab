@@ -313,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPawnHolder: {fileID: 24184999500545838}
   sleepTime: 2
+  points: 4
 --- !u!1 &7782554490051513946
 GameObject:
   m_ObjectHideFlags: 0

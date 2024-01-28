@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b854b091920501b409898c221054b3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: -5
   flyTime: 3
 --- !u!1 &7488079598597038919
 GameObject:

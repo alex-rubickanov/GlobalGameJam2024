@@ -125,6 +125,7 @@ MonoBehaviour:
   canBeGrabbed: 1
   wasThrown: 0
   lastGrabbedByPlayer: {fileID: 0}
+  points: -9
   explosionParticle: {fileID: 19854588, guid: 53777b8572d1e7242bc90044f62667ce, type: 3}
   timeToExplode: 3
   explosionForce: 300

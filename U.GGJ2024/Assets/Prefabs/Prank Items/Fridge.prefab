@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPawnHolder: {fileID: 8203568776383477967}
   sleepTime: 2
+  points: 4
 --- !u!95 &7810685134476036208
 Animator:
   serializedVersion: 5
@@ -160,6 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed41275ea5c3e584090345592aff45bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TryingToEscape: 
+  PlayerEntered: 
+  currentAnim: 
 --- !u!1 &5829882813011835809
 GameObject:
   m_ObjectHideFlags: 0

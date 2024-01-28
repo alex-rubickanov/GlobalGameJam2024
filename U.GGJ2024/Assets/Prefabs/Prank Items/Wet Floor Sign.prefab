@@ -127,6 +127,8 @@ MonoBehaviour:
   canBeGrabbed: 1
   wasThrown: 0
   lastGrabbedByPlayer: {fileID: 0}
+  points: 5
+  timeToDestroy: 0
   water: {fileID: 3369858413804088628}
   forceToLeg: 500
 --- !u!54 &7366143999484677657

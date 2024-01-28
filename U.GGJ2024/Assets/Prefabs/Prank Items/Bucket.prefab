@@ -151,3 +151,5 @@ MonoBehaviour:
   throwHitPowerMultiplier: 12
   canBeGrabbed: 1
   wasThrown: 0
+  lastGrabbedByPlayer: {fileID: 0}
+  points: 5

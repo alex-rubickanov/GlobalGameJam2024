@@ -154,6 +154,8 @@ MonoBehaviour:
   canBeGrabbed: 1
   wasThrown: 0
   lastGrabbedByPlayer: {fileID: 0}
+  pointsToWhoThrowed: 4
+  pointsToWhoWasAffected: -4
   explosionRadius: 2.5
 --- !u!114 &7250357994102330567
 MonoBehaviour:

@@ -154,6 +154,7 @@ MonoBehaviour:
   canBeGrabbed: 1
   wasThrown: 0
   lastGrabbedByPlayer: {fileID: 0}
+  points: 4
 --- !u!114 &7179888162644111424
 MonoBehaviour:
   m_ObjectHideFlags: 0

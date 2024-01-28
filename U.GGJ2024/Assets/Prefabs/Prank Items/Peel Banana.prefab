@@ -80,6 +80,7 @@ MonoBehaviour:
   canBeGrabbed: 1
   wasThrown: 0
   lastGrabbedByPlayer: {fileID: 0}
+  points: 4
   delayToHide: 1
   forceToLeg: 1000
   timeToDestroy: 2
