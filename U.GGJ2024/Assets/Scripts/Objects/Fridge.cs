@@ -22,7 +22,7 @@ public class Fridge : StunObject
     }
     private void Update()
     {
-        if (isOccupied)
+        if (isOccupied) 
         {
             throwUI.SetActive(false);
         }

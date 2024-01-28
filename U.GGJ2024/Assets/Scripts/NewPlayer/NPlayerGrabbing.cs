@@ -77,6 +77,7 @@ public class NPlayerGrabbing : MonoBehaviour
                         NPlayerManager grabbedPlayerManager = grabbedObject.GetComponentInParent<NPlayerManager>();
                         if (grabbedPlayerManager.PlayerGrabbing.isGrabbing)
                         {
+                            SFX();
                             grabbedPlayerManager.PlayerGrabbing.LooseObject();
                         }
                     }
@@ -175,5 +176,16 @@ public class NPlayerGrabbing : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(interactOrigin.position, detectionSphereRadius);
+    }
+
+    //Added Throw SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        if (audioManager != null)
+        {
+            Debug.Log("Throw sfx");
+            audioManager.PlayOneShotSfx(audioManager.throwSFX);
+        }
     }
 }

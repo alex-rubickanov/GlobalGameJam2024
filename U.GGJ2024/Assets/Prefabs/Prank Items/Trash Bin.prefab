@@ -124,6 +124,7 @@ MonoBehaviour:
   playerPawnHolder: {fileID: 6395548661480283693}
   sleepTime: 2
   points: 5
+  throwUI: {fileID: 4557953575144858568}
 --- !u!1 &3551154497575042997
 GameObject:
   m_ObjectHideFlags: 0

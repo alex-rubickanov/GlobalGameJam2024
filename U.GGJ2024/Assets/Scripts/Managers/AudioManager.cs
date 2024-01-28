@@ -18,6 +18,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip playerTrappedSfx;
     public AudioClip scanSFX;
     public AudioClip throwSFX;
+
+    [Header("Menu SFX")]
+    public AudioClip gameStart;
+    public AudioClip characterJoin;
+    public AudioClip ready;
+    public AudioClip winner;
+    public AudioClip laughSfx;
     void Awake()
     {
         if(instance == null)

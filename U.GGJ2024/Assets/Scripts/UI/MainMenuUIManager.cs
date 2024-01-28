@@ -20,8 +20,10 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] GameObject[] joinBtns;
     [SerializeField] GameObject[] arrows;
     [SerializeField] GameObject[] selectChrBtn;
-    [SerializeField] GameObject[] readyBtn; 
+    [SerializeField] GameObject[] readyBtn;
     int playerCount;
+
+    bool gameStartSfxPlayed;
 
     public int readyCount;
     private void Awake()
@@ -42,6 +44,7 @@ public class MainMenuUIManager : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
+            GameStartSFX(AudioManager.instance.gameStart);
             SetBlurBG(false);
             mainMenuPanel.SetActive(false);
             characterSelectionPanel.SetActive(true);
@@ -66,17 +69,37 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void DisableJoinBtns(PlayerInput obj)
     {
+        SFX(AudioManager.instance.characterJoin);
         joinBtns[playerCount].SetActive(false);
         arrows[playerCount].SetActive(true);
         selectChrBtn[playerCount].SetActive(true);
         playerCount++;
     }
-    
+
     public void EnableReadyBtn(int playerIndex)
     {
+        SFX(AudioManager.instance.ready);
         arrows[playerIndex].SetActive(false);
         selectChrBtn[playerIndex].SetActive(false);
         readyBtn[playerIndex].SetActive(true);
         readyCount++;
+    }
+
+    void SFX(AudioClip clip)
+    {
+        gameStartSfxPlayed = true;
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(clip);
+    }
+
+    void GameStartSFX(AudioClip clip)
+    {
+        if (!gameStartSfxPlayed)
+        {
+            gameStartSfxPlayed = true;
+            gameStartSfxPlayed = true;
+            AudioManager audioManager = AudioManager.instance;
+            audioManager.PlayOneShotSfx(clip);
+        }
     }
 }

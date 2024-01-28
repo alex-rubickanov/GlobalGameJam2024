@@ -44,6 +44,7 @@ public class Propane : GrabbableObject
         if (!once)
         {
             ParticleSystem particle = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            SFX();
             Destroy(particle, 5.0f);
         }
 
@@ -92,5 +93,11 @@ public class Propane : GrabbableObject
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+    
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.bombSfx);
     }
 }

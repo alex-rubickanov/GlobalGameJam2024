@@ -22,15 +22,19 @@ public class NPlayerManager : MonoBehaviour
     [SerializeField] private Transform bucketModel;
     [SerializeField] private float bucketTime = 10f;
     [SerializeField] private float drunkTime = 10f;
-    
+
+    [SerializeField] private GameObject p1Circle;
+    [SerializeField] private GameObject p2Circle;
+    [SerializeField] private GameObject p3Circle;
+
     public bool isStun = false;
     private int pressCount = 0;
-    
+
     private StunObject stunObject;
-    
+
     private Transform spawnPoint;
-    
-    
+
+
     private void Awake()
     {
         InputHandler = GetComponent<NInputHandler>();
@@ -39,7 +43,7 @@ public class NPlayerManager : MonoBehaviour
         PlayerAnimator = GetComponentInChildren<NPlayerAnimator>();
         RagdollController = GetComponentInChildren<RagdollController>();
         GrabbablePlayer = GetComponentInChildren<GrabbablePlayer>();
-        
+
         DespawnPlayer();
     }
 
@@ -49,7 +53,7 @@ public class NPlayerManager : MonoBehaviour
         {
             InputHandler.OnUnStun += UnStan_pressed;
         }
-        
+
         SpawnPlayer();
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -64,7 +68,7 @@ public class NPlayerManager : MonoBehaviour
     private void UnStan_pressed()
     {
         if (!isStun) return;
-        
+
         pressCount++;
         if (pressCount >= pressToUnStun)
         {
@@ -77,12 +81,12 @@ public class NPlayerManager : MonoBehaviour
     {
         stunObject = _stunObject;
         isStun = true;
-        
+
         RagdollController.DisableWithoutAnimation();
-        
+
         RagdollController.playerCollider.enabled = false;
         RagdollController.playerRigidbody.isKinematic = true;
-        
+
         PlayerMovement.canMove = false;
     }
 
@@ -101,7 +105,7 @@ public class NPlayerManager : MonoBehaviour
         bucketModel.gameObject.SetActive(true);
         StartCoroutine(BucketOff());
     }
-    
+
     private IEnumerator BucketOff()
     {
         yield return new WaitForSeconds(bucketTime);
@@ -114,13 +118,13 @@ public class NPlayerManager : MonoBehaviour
         PlayerMovement.isDrunk = true;
         StartCoroutine(DrunkOff());
     }
-    
+
     public void RestartDrunk()
     {
         StopCoroutine(DrunkOff());
         StartCoroutine(DrunkOff());
     }
-    
+
     private IEnumerator DrunkOff()
     {
         yield return new WaitForSeconds(drunkTime);
@@ -132,7 +136,7 @@ public class NPlayerManager : MonoBehaviour
         PlayerMovement.isFart = true;
         StartCoroutine(FartOff());
     }
-    
+
     private IEnumerator FartOff()
     {
         yield return new WaitForSeconds(3.0f);
@@ -155,17 +159,33 @@ public class NPlayerManager : MonoBehaviour
     {
         playerPawn.gameObject.SetActive(false);
     }
-    
+
     public void SpawnPlayer()
     {
         playerPawn.position = spawnPoint.position;
         playerPawn.rotation = spawnPoint.rotation;
-        
+
         playerPawn.gameObject.SetActive(true);
     }
-    
+
     public void SetSpawnPoint(Transform _spawnPoint)
     {
         spawnPoint = _spawnPoint;
+    }
+
+    public void SetupPlayerSprite(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                p1Circle.gameObject.SetActive(true);
+                break;
+            case 1:
+                p2Circle.gameObject.SetActive(true);
+                break;
+            case 2:
+                p3Circle.gameObject.SetActive(true);
+                break;
+        }
     }
 }

@@ -47,6 +47,12 @@ public class NCoopManager : MonoBehaviour
         {
             playerInputManager.DisableJoining();
         }
+        foreach(var player in players)
+        {
+            player.SetSpawnPoint(spawnPoints[spawnPoints.Length - 1]);
+            player.DespawnPlayer();
+            player.SpawnPlayer();
+        }
     }
 
     private void OnPlayerJoined(PlayerInput obj)
@@ -55,6 +61,7 @@ public class NCoopManager : MonoBehaviour
         players.Add(playerManager);
 
         playerManager.SetSpawnPoint(spawnPoints[players.Count - 1]);
+        playerManager.SetupPlayerSprite(players.Count - 1);
         
         DontDestroyOnLoad(playerManager.gameObject);
     }
