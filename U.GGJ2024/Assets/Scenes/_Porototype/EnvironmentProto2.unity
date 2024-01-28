@@ -1735,7 +1735,12 @@ MonoBehaviour:
   numberOfObj: 10
   points: []
   playerTransform: {fileID: 0}
-  playerUI: {fileID: 290008670}
+  player1UI: {fileID: 290008670}
+  player2UI: {fileID: 1047856297}
+  player3UI: {fileID: 2072904556}
+  player1PointsText: {fileID: 1466115360}
+  player2PointsText: {fileID: 675588084}
+  player3PointsText: {fileID: 1511612187}
 --- !u!4 &230157958
 Transform:
   m_ObjectHideFlags: 0
@@ -14662,8 +14667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgMusic: {fileID: 277081494}
   sfx: {fileID: 643554555}
-  fartBombSfx: {fileID: 8300000, guid: 90a2a98606252ab46b7935a79c7cb8d0, type: 3}
-  bottleSFx: {fileID: 8300000, guid: 5583b9ece5016954da9cd581fd35a32d, type: 3}
+  fartBombSfx: {fileID: 0}
+  bottleSFx: {fileID: 0}
 --- !u!1001 &1956478339
 PrefabInstance:
   m_ObjectHideFlags: 0
