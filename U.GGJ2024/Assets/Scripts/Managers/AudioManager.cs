@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
     
     public AudioSource bgMusic;
     public AudioSource sfx;
+    [Header("SFX")]
+    public AudioClip fartBombSfx;
+    public AudioClip bottleSFx;
     void Awake()
     {
         if(instance == null)

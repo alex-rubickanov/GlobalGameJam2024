@@ -16,7 +16,7 @@ public class PointsGainUIManager : MonoBehaviour
     [SerializeField] public List<GameObject> points;
 
     [SerializeField] Transform playerTransform;
-    [SerializeField] RectTransform playerUI;
+    [SerializeField] public RectTransform playerUI;
 
     private void Awake()
     {
@@ -31,6 +31,8 @@ public class PointsGainUIManager : MonoBehaviour
 
         InitObjectPool();
     }
+
+
 
     public void ShowUIPoints(Transform worldPoint, int value)
     {

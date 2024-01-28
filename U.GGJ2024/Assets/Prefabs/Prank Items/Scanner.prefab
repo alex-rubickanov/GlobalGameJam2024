@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdf0d6c17233aa4c95dd62964638c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: 9
   sleepTime: 2
   facePhoto: {fileID: 4375688347886526698, guid: d6c16d7c9a58cd743a97c1952e9344a7,
     type: 3}

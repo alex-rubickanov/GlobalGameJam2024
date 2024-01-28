@@ -25,6 +25,8 @@ public class FartBomb : GrabbableObject
 
             if (!once)
             {
+                SFX();
+                VFX();
                 Explode();
                 once = true;
             }
@@ -45,7 +47,6 @@ public class FartBomb : GrabbableObject
                 UpdatePlayerPoints(playerManager);
             }
         }
-
         canBeGrabbed = false;
         Destroy(gameObject, 5);
     }
@@ -60,5 +61,21 @@ public class FartBomb : GrabbableObject
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
+
+    //VFX AND SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.fartBombSfx);
+    }
+    public VfxManager vfx => GetComponent<VfxManager>();
+    void VFX()
+    {
+        if(vfx != null)
+        {
+            vfx.SpawnVFX(vfx.vfxList[0], 3);
+        }
     }
 }
