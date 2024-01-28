@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8480445170957762077}
   - component: {fileID: 2913988803789804301}
   - component: {fileID: 4045722144477373973}
+  - component: {fileID: 7810685134476036208}
+  - component: {fileID: 5638241174097485205}
   m_Layer: 0
   m_Name: Fridge
   m_TagString: Untagged
@@ -125,6 +127,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPawnHolder: {fileID: 8203568776383477967}
   sleepTime: 2
+--- !u!95 &7810685134476036208
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292485822638664543}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 44607de85a0f50442972cb5c0f83e104, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5638241174097485205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292485822638664543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed41275ea5c3e584090345592aff45bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5829882813011835809
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,13 +269,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5847695824485993014}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.72194135, z: 0, w: 0.69195426}
   m_LocalPosition: {x: -0.6249994, y: 0.6456353, z: 0.29999858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1001586443526666007}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -92.43, z: 0}
 --- !u!33 &9026993135083418505
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -317,13 +352,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6725583798731731272}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.8333074, z: 0, w: 0.55281}
   m_LocalPosition: {x: 0.6249995, y: 0.6456353, z: 0.29999858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1001586443526666007}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 112.88, z: 0}
 --- !u!33 &5440650905386268581
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class Fridge : StunObject
         if (playerInside && !isOccupied && playerInside.GrabbablePlayer.wasThrown)
         {
             TrapPlayer(playerInside);
+            anim.PlayAnim(anim.PlayerEntered);
         }
     }
     
@@ -32,4 +33,6 @@ public class Fridge : StunObject
         playerInside = null;
         StartCoroutine(EnableCanWithDelay());
     }
+
+    public FridgeAnimator anim => GetComponent<FridgeAnimator>();
 }
