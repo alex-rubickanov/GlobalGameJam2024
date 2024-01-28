@@ -70,20 +70,4 @@ public class PlayerReadyConfirmation : MonoBehaviour
     {
         leftButtonPressed = true;
     }
-
-    private void OnEnable()
-    {
-        playerManager.InputHandler.OnConfirmLeftStarted += OnConfirmLeftStarted;
-        playerManager.InputHandler.OnConfirmRightStarted += OnConfirmRightStarted;
-        playerManager.InputHandler.OnConfirmLeftCanceled += OnConfirmLeftCanceled;
-        playerManager.InputHandler.OnConfirmRightCanceled += OnConfirmRightCanceled;
-    }
-
-    private void OnDisable()
-    {
-        playerManager.InputHandler.OnConfirmLeftStarted -= OnConfirmLeftStarted;
-        playerManager.InputHandler.OnConfirmRightStarted -= OnConfirmRightStarted;
-        playerManager.InputHandler.OnConfirmLeftCanceled -= OnConfirmLeftCanceled;
-        playerManager.InputHandler.OnConfirmRightCanceled -= OnConfirmRightCanceled;
-    }
 }

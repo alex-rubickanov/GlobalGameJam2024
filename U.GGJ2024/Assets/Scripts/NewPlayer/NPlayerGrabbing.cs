@@ -48,6 +48,11 @@ public class NPlayerGrabbing : MonoBehaviour
         {
             ChargePower();
         }
+
+        if (isGrabbing == false)
+        {
+            playerManager.InputHandler.StopGamepadVibration();
+        }
     }
 
     private void TryGrab()
@@ -125,6 +130,14 @@ public class NPlayerGrabbing : MonoBehaviour
 
     private void ChargePower()
     {
+        if (throwPower != maxThrowPower)
+        {
+            playerManager.InputHandler.GamepadVibrate();
+        }
+        else
+        {
+            playerManager.InputHandler.StopGamepadVibration();
+        }
         isThrowing = true;
         throwPower += throwPowerChargeSpeed * Time.deltaTime;
         throwPower = Mathf.Clamp(throwPower, minThrowPower, maxThrowPower);

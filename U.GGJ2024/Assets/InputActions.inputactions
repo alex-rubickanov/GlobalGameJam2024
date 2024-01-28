@@ -172,18 +172,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ConfirmReadyLeft",
+                    "name": "Ready",
                     "type": "Button",
-                    "id": "80d49279-20e9-46ce-876f-da61626d3fb0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ConfirmReadyRight",
-                    "type": "Button",
-                    "id": "41524701-5017-4504-bec3-999d29c25b2e",
+                    "id": "e8f619cc-7bd1-4073-98a6-3bbb51d9bcb2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -215,23 +206,12 @@
                 },
                 {
                     "name": "",
-                    "id": "ee25dc8b-25ca-421b-9ed8-20409df36543",
-                    "path": "<Gamepad>/leftTrigger",
+                    "id": "288c7b17-ba0a-4f7e-9b14-6207b208eccf",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ConfirmReadyLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fcfa9a16-905a-49f0-959b-11e451a891e8",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ConfirmReadyRight",
+                    "groups": "",
+                    "action": "Ready",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

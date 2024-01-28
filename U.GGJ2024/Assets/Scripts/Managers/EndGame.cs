@@ -15,6 +15,12 @@ public class EndGame : MonoBehaviour
     
     private PointsGainUIManager pointsGainUiManager;
     private bool timerStop = false;
+
+    private void Start()
+    {
+        pointsGainUiManager = GetComponent<PointsGainUIManager>();
+    }
+
     private void Update()
     {
         if (!timerStop)

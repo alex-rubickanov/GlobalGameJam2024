@@ -19,12 +19,19 @@ public class PlayerCharacterSelector : MonoBehaviour
 
         inputHandler.OnCCLeft += OnCCLeft;
         inputHandler.OnCCRight += OnCCRight;
+        inputHandler.OnReady += Select;
 
         index = 0;
         currentCharacter = characters[index];
 
         index = Random.Range(0, characters.Count);
         ChangeCharacter();
+    }
+
+    private void Select()
+    {
+        MainMenuUIManager.Instance.EnableReadyBtn(GetComponentInParent<NPlayerManager>().InputHandler.playerInput.playerIndex);
+        this.enabled = false;
     }
 
     private void OnCCRight()

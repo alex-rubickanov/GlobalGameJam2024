@@ -37,6 +37,7 @@ public class Baloons : MonoBehaviour
 
     private void TakePlayerAndGoUp()
     {
+        SFX();
         takenPlayer.RagdollController.EnableRagdoll();
         takenPlayer.RagdollController.AttachPelvisTo(joint);
         StartCoroutine(UpAndDestroy());
