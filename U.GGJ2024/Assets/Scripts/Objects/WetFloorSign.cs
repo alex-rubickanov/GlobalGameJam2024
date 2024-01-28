@@ -48,7 +48,7 @@ public class WetFloorSign : GrabbableObject
             playerManager.RagdollController.EnableRagdoll();
             playerManager.RagdollController.GetRandomLeg().AddForce(other.transform.forward * forceToLeg, ForceMode.Impulse);
             playerManager.RagdollController.DisableRagdollWithDelay(3.0f);
-            
+            SFX();
             UpdatePlayerPoints();
         }
     }
@@ -56,5 +56,12 @@ public class WetFloorSign : GrabbableObject
     private void UpdatePlayerPoints()
     {
         PointsGainUIManager.instance.ShowUIPoints(lastGrabbedByPlayer.playerManager.playerPawn.transform, points);
+    }
+
+    //SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.SlideSfx);
     }
 }

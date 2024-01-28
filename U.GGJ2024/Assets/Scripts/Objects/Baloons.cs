@@ -55,4 +55,12 @@ public class Baloons : MonoBehaviour
     {
         PointsGainUIManager.instance.ShowUIPoints(takenPlayer.playerPawn.transform, points);
     }
+    
+    //SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.BalloonSFx);
+    }
+
 }

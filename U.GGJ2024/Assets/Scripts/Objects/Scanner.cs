@@ -28,6 +28,7 @@ public class Scanner : MonoBehaviour
 
     private void ScanPlayer(NPlayerManager nPlayerManager)
     {
+        SFX();
         isCooldown = true;
         StartCoroutine(Cooldown());
         
@@ -54,5 +55,12 @@ public class Scanner : MonoBehaviour
     {
         yield return new WaitForSeconds(sleepTime);
         isCooldown = false;
+    }
+
+    //SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.scanSFX);
     }
 }

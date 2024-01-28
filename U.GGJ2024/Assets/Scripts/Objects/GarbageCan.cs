@@ -14,6 +14,7 @@ public class GarbageCan : StunObject
         Debug.Log(playerInside.GrabbablePlayer.wasThrown);
         if (playerInside && !isOccupied && playerInside.GrabbablePlayer.wasThrown)
         {
+            SFX();
             TrapPlayer(playerInside);
             UpdatePlayerPoints(playerInside);
         }
@@ -23,5 +24,12 @@ public class GarbageCan : StunObject
     {
         PointsGainUIManager.instance.ShowUIPoints(
             trappedPlayer.GrabbablePlayer.lastGrabbedByPlayer.playerManager.playerPawn, points);
+    }
+
+    //SFX
+    void SFX()
+    {
+        AudioManager audioManager = AudioManager.instance;
+        audioManager.PlayOneShotSfx(audioManager.playerTrappedSfx);
     }
 }
