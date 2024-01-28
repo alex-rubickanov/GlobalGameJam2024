@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-
+    
     public AudioSource bgMusic;
     public AudioSource sfx;
     void Awake()
