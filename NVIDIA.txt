@@ -1,0 +1,3 @@
+RTX GPU x2
+NVIDIA PhysX
+NVIDIA Studio
