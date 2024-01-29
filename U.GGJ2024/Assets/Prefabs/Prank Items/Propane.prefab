@@ -130,8 +130,8 @@ MonoBehaviour:
   explosionParticle: {fileID: 198202731371243394, guid: 65932b7368590234d8163da03c2055d8,
     type: 3}
   timeToExplode: 3
-  explosionForce: 300
-  explosionRadius: 2.71
+  explosionForce: 150
+  explosionRadius: 3.2
   OnExplosion:
     m_PersistentCalls:
       m_Calls:

@@ -4329,7 +4329,7 @@ MonoBehaviour:
   RagdollController: {fileID: 0}
   playerPawn: {fileID: 1193232647281918122}
   playerModel: {fileID: 756499342720491618}
-  pressToUnStun: 3
+  pressToUnStun: 10
   bucketModel: {fileID: 4317845360321433141}
   bucketTime: 10
   drunkTime: 10

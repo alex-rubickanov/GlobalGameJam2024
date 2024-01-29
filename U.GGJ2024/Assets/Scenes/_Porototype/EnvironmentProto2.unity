@@ -2456,8 +2456,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 25.768238, z: 19.105886}
-  m_Center: {x: 0, y: 12.384119, z: -1.8253949}
+  m_Size: {x: 21.405777, y: 118.57, z: 19.105886}
+  m_Center: {x: -10.2028885, y: 12.384121, z: -1.8253946}
 --- !u!23 &177687932
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2763,8 +2763,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 25.768238, z: 36.367554}
-  m_Center: {x: 1.3897642e-15, y: 12.384119, z: -1.9022036}
+  m_Size: {x: 25.835148, y: 118.57, z: 36.367554}
+  m_Center: {x: -12.417577, y: 12.384121, z: -1.9022026}
 --- !u!23 &184976793
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14586,12 +14586,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -15484,8 +15484,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 25.768238, z: 36.367554}
-  m_Center: {x: 1.3897642e-15, y: 12.384119, z: -1.9022036}
+  m_Size: {x: 29.873158, y: 118.57, z: 36.367554}
+  m_Center: {x: 14.436583, y: 12.384121, z: -1.9022026}
 --- !u!23 &1014974671
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18407,8 +18407,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 25.768238, z: 19.105886}
-  m_Center: {x: 0, y: 12.384119, z: -1.8253949}
+  m_Size: {x: 21.175299, y: 118.57, z: 19.105886}
+  m_Center: {x: 10.087649, y: 12.384121, z: -1.8253946}
 --- !u!23 &1185496905
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21616,6 +21616,72 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1365216265}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1365568855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1365568858}
+  - component: {fileID: 1365568857}
+  - component: {fileID: 1365568856}
+  m_Layer: 0
+  m_Name: Save Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1365568856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365568855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667b036b93783a148bb236ff87cd0f61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1365568857
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365568855}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5000, y: 500, z: 5000}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1365568858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365568855}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.797221, y: -263, z: -4.167931}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1367440091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22476,7 +22542,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -32091,8 +32157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mysteryBox: {fileID: 1945099038019035939, guid: fd72c1bbfc29b3245bdec39a00d66710,
     type: 3}
-  minSpawnTime: 4
-  maxSpawnTime: 8
+  minSpawnTime: 3
+  maxSpawnTime: 5
   spawnPoints:
   - {fileID: 523802467}
   - {fileID: 523802467}
@@ -34190,3 +34256,4 @@ SceneRoots:
   - {fileID: 944086496}
   - {fileID: 1424783723}
   - {fileID: 1076992099}
+  - {fileID: 1365568858}

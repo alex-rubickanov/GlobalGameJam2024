@@ -15,7 +15,7 @@ public class Baloons : MonoBehaviour
         joint = GetComponentInChildren<FixedJoint>();
         rb = GetComponent<Rigidbody>();
 
-        transform.position = new Vector3(transform.position.x, 2.2f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 2.5f, transform.position.z);
     }
 
     private void OnCollisionEnter(Collision other)
